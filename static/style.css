@@ -1,0 +1,218 @@
+body{
+    font-family: Arial, sans-serif;
+    background-color: #f4f6f9;
+    margin: 0;
+    padding: 0;
+}
+
+.container{
+    text-align: center;
+    padding: 40px;
+}
+
+h1{
+    color: #2c3e50;
+    font-size: 40px;
+}
+
+.subtitle{
+    color: gray;
+    margin-bottom: 40px;
+}
+
+.dashboard{
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    flex-wrap: wrap;
+}
+
+.card{
+    background: white;
+    width: 250px;
+    padding: 20px;
+    border-radius: 15px;
+
+    box-shadow: 0px 4px 10px rgba(0,0,0,0.1);
+}
+
+.card h2{
+    color: #34495e;
+}
+
+.card p{
+    font-size: 28px;
+    font-weight: bold;
+}
+
+.predict-btn{
+    margin-top: 40px;
+
+    padding: 15px 30px;
+
+    border: none;
+
+    background-color: #3498db;
+
+    color: white;
+
+    border-radius: 10px;
+
+    font-size: 18px;
+
+    cursor: pointer;
+}
+
+.predict-btn:hover{
+    background-color: #2980b9;
+}
+.input-grid{
+display:grid;
+grid-template-columns:repeat(3,1fr);
+gap:15px;
+margin:30px 0;
+}
+
+.input-grid input{
+padding:12px;
+border:1px solid #ddd;
+border-radius:8px;
+font-size:14px;
+}
+
+.low-risk{
+color: green;
+font-weight: bold;
+font-size: 24px;
+}
+
+.medium-risk{
+color: orange;
+font-weight: bold;
+font-size: 24px;
+}
+
+.high-risk{
+color: red;
+font-weight: bold;
+font-size: 24px;
+}
+
+.progress-container{
+width: 100%;
+height: 15px;
+background: #e0e0e0;
+border-radius: 20px;
+margin-top: 15px;
+overflow: hidden;
+}
+
+.progress-bar{
+height: 100%;
+background: #3498db;
+border-radius: 20px;
+}
+
+.input-grid{
+display: grid;
+grid-template-columns: repeat(3,1fr);
+gap: 15px;
+margin: 30px 0;
+}
+
+.input-grid input{
+padding: 12px;
+border: 1px solid #ddd;
+border-radius: 8px;
+font-size: 14px;
+}
+
+.risk-factors{
+    margin-top:30px;
+    padding:25px;
+    text-align:left;
+}
+
+.risk-factors h2{
+    text-align:center;
+    margin-bottom:20px;
+}
+
+.risk-factors ul{
+    line-height:2;
+    font-size:18px;
+}
+
+/* Prediction Result Card */
+
+.prediction-card{
+    width: 400px;
+    margin: 30px auto;
+    text-align: center;
+}
+
+/* Risk Factors Panel */
+
+.risk-factors{
+    width: 700px;
+    margin: 30px auto;
+    padding: 25px;
+    background: white;
+    border-radius: 15px;
+    box-shadow: 0px 3px 10px rgba(0,0,0,0.1);
+    text-align: left;
+}
+
+.risk-factors h2{
+    color: #2c3e50;
+    margin-bottom: 15px;
+}
+
+.risk-factors ul{
+    line-height: 2;
+}
+
+/* Risk Colors */
+
+.low-risk{
+    color: green;
+    font-weight: bold;
+}
+
+.medium-risk{
+    color: orange;
+    font-weight: bold;
+}
+
+.high-risk{
+    color: red;
+    font-weight: bold;
+}
+
+/* Center Predict Button */
+
+.predict-btn{
+    display: block;
+    margin: 30px auto;
+    padding: 15px 35px;
+    border: none;
+    border-radius: 10px;
+    background: #3498db;
+    color: white;
+    font-size: 18px;
+    cursor: pointer;
+}
+
+.predict-btn:hover{
+    background: #2980b9;
+}
+
+/* Footer */
+
+footer{
+    margin-top: 50px;
+    text-align: center;
+    color: gray;
+    font-size: 14px;
+    padding-bottom: 20px;
+}

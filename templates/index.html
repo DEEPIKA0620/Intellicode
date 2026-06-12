@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>IntelliCode</title>
+
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='style.css') }}">
+</head>
+
+<body>
+
+<div class="container">
+
+    <!-- HEADER -->
+
+    <header>
+        <h1>🚀 IntelliCode</h1>
+
+        <p class="subtitle">
+            AI-Powered Software Defect Prediction & Code Quality Intelligence Platform
+        </p>
+    </header>
+
+    <!-- INPUT FORM -->
+
+    <section class="form-section">
+
+        <h2>Software Metrics Input</h2>
+
+        <form action="/predict" method="POST">
+
+            <div class="input-grid">
+
+                <input type="number" name="loc" placeholder="LOC" required>
+
+                <input type="number" name="vg"
+                       placeholder="Cyclomatic Complexity" required>
+
+                <input type="number" name="evg"
+                       placeholder="Essential Complexity" required>
+
+                <input type="number" name="ivg"
+                       placeholder="Design Complexity" required>
+
+                <input type="number" name="n"
+                       placeholder="Program Length" required>
+
+                <input type="number" name="v"
+                       placeholder="Halstead Volume" required>
+
+                <input type="number" step="any"
+                       name="l"
+                       placeholder="Program Level" required>
+
+                <input type="number" name="d"
+                       placeholder="Difficulty" required>
+
+                <input type="number" name="i"
+                       placeholder="Intelligence" required>
+
+                <input type="number" name="e"
+                       placeholder="Effort" required>
+
+                <input type="number" step="any"
+                       name="b"
+                       placeholder="Bugs" required>
+
+                <input type="number" name="t"
+                       placeholder="Time Estimate" required>
+
+                <input type="number" name="locode"
+                       placeholder="Logical LOC" required>
+
+                <input type="number" name="locomment"
+                       placeholder="Comments" required>
+
+                <input type="number" name="loblank"
+                       placeholder="Blank Lines" required>
+
+                <input type="number" name="loccodecomment"
+                       placeholder="Code + Comment" required>
+
+                <input type="number" name="uniqop"
+                       placeholder="Unique Operators" required>
+
+                <input type="number" name="uniqopnd"
+                       placeholder="Unique Operands" required>
+
+                <input type="number" name="totalop"
+                       placeholder="Total Operators" required>
+
+                <input type="number" name="totalopnd"
+                       placeholder="Total Operands" required>
+
+                <input type="number" name="branchcount"
+                       placeholder="Branch Count" required>
+
+            </div>
+
+            <button type="submit" class="predict-btn">
+                Predict Module Risk
+            </button>
+
+        </form>
+
+    </section>
+
+    <!-- RESULTS DASHBOARD -->
+
+    <section class="results-section">
+
+        <h2>Prediction Dashboard</h2>
+
+        <div class="dashboard">
+
+            <!-- Risk Score -->
+
+            <div class="card">
+
+                <h3>Risk Score</h3>
+
+                <p>
+                    {% if risk_score %}
+                        {{ risk_score }}%
+                    {% else %}
+                        --
+                    {% endif %}
+                </p>
+
+                {% if risk_score %}
+                <div class="progress-container">
+
+                    <div class="progress-bar"
+                         style="width: {{ risk_score }}%;">
+                    </div>
+
+                </div>
+                {% endif %}
+
+            </div>
+
+            <!-- Risk Level -->
+
+            <div class="card">
+
+                <h3>Risk Level</h3>
+
+                {% if risk_level == "Low" %}
+                    <p class="low-risk">🟢 Low</p>
+
+                {% elif risk_level == "Medium" %}
+                    <p class="medium-risk">🟡 Medium</p>
+
+                {% elif risk_level == "High" %}
+                    <p class="high-risk">🔴 High</p>
+
+                {% else %}
+                    <p>--</p>
+
+                {% endif %}
+
+            </div>
+
+            <!-- Testing Priority -->
+
+            <div class="card">
+
+                <h3>Testing Priority</h3>
+
+                <p>
+                    {% if priority %}
+                        {{ priority }}
+                    {% else %}
+                        --
+                    {% endif %}
+                </p>
+
+            </div>
+
+            <!-- Prediction Result -->
+
+            <div class="card">
+
+                <h3>Prediction Result</h3>
+
+                {% if prediction == 1 %}
+                    <p class="high-risk">
+                        ⚠ Defective Module
+                    </p>
+
+                {% elif prediction == 0 %}
+                    <p class="low-risk">
+                        ✔ Healthy Module
+                    </p>
+
+                {% else %}
+                    <p>--</p>
+
+                {% endif %}
+
+            </div>
+
+        </div>
+
+    </section>
+
+    <!-- TOP RISK FACTORS -->
+
+    {% if risk_score %}
+
+    <section class="risk-factors">
+
+        <div class="card factor-card">
+
+            <h2>🔥 Top Risk Factors</h2>
+
+            <ul>
+
+                <li>Cyclomatic Complexity affects maintainability</li>
+
+                <li>High Program Length increases defect probability</li>
+
+                <li>Large Halstead Volume indicates complexity</li>
+
+                <li>Branch Count impacts testing effort</li>
+
+            </ul>
+
+        </div>
+
+    </section>
+
+    {% endif %}
+
+    <!-- FOOTER -->
+
+    <footer>
+
+        <p>
+            IntelliCode © 2026 |
+            AI-Powered Software Defect Prediction Platform
+        </p>
+
+    </footer>
+
+</div>
+
+</body>
+</html>
+```
