@@ -238,3 +238,38 @@ th{
     background:#3498db;
     color:white;
 }
+
+.explanation-card{
+    width:85%;
+    max-width:900px;
+    margin:30px auto;
+    padding:30px;
+    text-align:left;
+}
+
+.explanation-card h2{
+    text-align:center;
+    color:#2c3e50;
+    margin-bottom:25px;
+}
+
+.explanation-card h3{
+    margin-top:20px;
+    color:#34495e;
+}
+
+.explanation-text{
+    font-size:18px;
+    line-height:1.8;
+}
+
+.factor-list{
+    margin-top:10px;
+    padding-left:25px;
+}
+
+.factor-list li{
+    margin-bottom:12px;
+    font-size:17px;
+    line-height:1.6;
+}

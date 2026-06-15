@@ -16,255 +16,263 @@
 
     <!-- HEADER -->
 
-    <header>
-        <h1>🚀 IntelliCode</h1>
+    <h1>🚀 IntelliCode</h1>
 
-        <p class="subtitle">
-            AI-Powered Software Defect Prediction & Code Quality Intelligence Platform
-        </p>
-    </header>
+    <p class="subtitle">
+        AI-Powered Software Defect Prediction & Code Quality Intelligence Platform
+    </p>
 
     <!-- INPUT FORM -->
 
-    <section class="form-section">
+    <form action="/predict" method="POST">
 
-        <h2>Software Metrics Input</h2>
+        <div class="input-grid">
 
-        <form action="/predict" method="POST">
+            <input type="number" name="loc" placeholder="LOC" required>
+            <input type="number" name="vg" placeholder="Cyclomatic Complexity" required>
+            <input type="number" name="evg" placeholder="Essential Complexity" required>
 
-            <div class="input-grid">
+            <input type="number" name="ivg" placeholder="Design Complexity" required>
+            <input type="number" name="n" placeholder="Program Length" required>
+            <input type="number" name="v" placeholder="Halstead Volume" required>
 
-                <input type="number" name="loc" placeholder="LOC" required>
+            <input type="number" step="any" name="l" placeholder="Program Level" required>
+            <input type="number" name="d" placeholder="Difficulty" required>
+            <input type="number" name="i" placeholder="Intelligence" required>
 
-                <input type="number" name="vg"
-                       placeholder="Cyclomatic Complexity" required>
+            <input type="number" name="e" placeholder="Effort" required>
+            <input type="number" step="any" name="b" placeholder="Bugs" required>
+            <input type="number" name="t" placeholder="Time Estimate" required>
 
-                <input type="number" name="evg"
-                       placeholder="Essential Complexity" required>
+            <input type="number" name="locode" placeholder="Logical LOC" required>
+            <input type="number" name="locomment" placeholder="Comments" required>
+            <input type="number" name="loblank" placeholder="Blank Lines" required>
 
-                <input type="number" name="ivg"
-                       placeholder="Design Complexity" required>
+            <input type="number" name="loccodecomment" placeholder="Code + Comment" required>
+            <input type="number" name="uniqop" placeholder="Unique Operators" required>
+            <input type="number" name="uniqopnd" placeholder="Unique Operands" required>
 
-                <input type="number" name="n"
-                       placeholder="Program Length" required>
+            <input type="number" name="totalop" placeholder="Total Operators" required>
+            <input type="number" name="totalopnd" placeholder="Total Operands" required>
+            <input type="number" name="branchcount" placeholder="Branch Count" required>
 
-                <input type="number" name="v"
-                       placeholder="Halstead Volume" required>
+        </div>
 
-                <input type="number" step="any"
-                       name="l"
-                       placeholder="Program Level" required>
+        <button type="submit" class="predict-btn">
+            Predict Module Risk
+        </button>
 
-                <input type="number" name="d"
-                       placeholder="Difficulty" required>
-
-                <input type="number" name="i"
-                       placeholder="Intelligence" required>
-
-                <input type="number" name="e"
-                       placeholder="Effort" required>
-
-                <input type="number" step="any"
-                       name="b"
-                       placeholder="Bugs" required>
-
-                <input type="number" name="t"
-                       placeholder="Time Estimate" required>
-
-                <input type="number" name="locode"
-                       placeholder="Logical LOC" required>
-
-                <input type="number" name="locomment"
-                       placeholder="Comments" required>
-
-                <input type="number" name="loblank"
-                       placeholder="Blank Lines" required>
-
-                <input type="number" name="loccodecomment"
-                       placeholder="Code + Comment" required>
-
-                <input type="number" name="uniqop"
-                       placeholder="Unique Operators" required>
-
-                <input type="number" name="uniqopnd"
-                       placeholder="Unique Operands" required>
-
-                <input type="number" name="totalop"
-                       placeholder="Total Operators" required>
-
-                <input type="number" name="totalopnd"
-                       placeholder="Total Operands" required>
-
-                <input type="number" name="branchcount"
-                       placeholder="Branch Count" required>
-
-            </div>
-
-            <button type="submit" class="predict-btn">
-                Predict Module Risk
-            </button>
-
-        </form>
-
-    </section>
+    </form>
 
     <!-- RESULTS DASHBOARD -->
 
-    <section class="results-section">
+    <div class="dashboard">
 
-        <h2>Prediction Dashboard</h2>
+        <!-- Risk Score -->
 
-        <div class="dashboard">
+        <div class="card">
 
-            <!-- Risk Score -->
+            <h2>Risk Score</h2>
 
-            <div class="card">
-
-                <h3>Risk Score</h3>
-
-                <p>
-                    {% if risk_score %}
-                        {{ risk_score }}%
-                    {% else %}
-                        --
-                    {% endif %}
-                </p>
-
+            <p>
                 {% if risk_score %}
-                <div class="progress-container">
-
-                    <div class="progress-bar"
-                         style="width: {{ risk_score }}%;">
-                    </div>
-
-                </div>
-                {% endif %}
-
-            </div>
-
-            <!-- Risk Level -->
-
-            <div class="card">
-
-                <h3>Risk Level</h3>
-
-                {% if risk_level == "Low" %}
-                    <p class="low-risk">🟢 Low</p>
-
-                {% elif risk_level == "Medium" %}
-                    <p class="medium-risk">🟡 Medium</p>
-
-                {% elif risk_level == "High" %}
-                    <p class="high-risk">🔴 High</p>
-
+                    {{ risk_score }}%
                 {% else %}
-                    <p>--</p>
-
+                    --
                 {% endif %}
+            </p>
+
+            {% if risk_score %}
+
+            <div class="progress-container">
+
+                <div class="progress-bar"
+                     style="width: {{ risk_score }}%;">
+                </div>
 
             </div>
 
-            <!-- Testing Priority -->
+            {% endif %}
 
-            <div class="card">
+        </div>
 
-                <h3>Testing Priority</h3>
+        <!-- Risk Level -->
 
-                <p>
-                    {% if priority %}
-                        {{ priority }}
-                    {% else %}
-                        --
-                    {% endif %}
+        <div class="card">
+
+            <h2>Risk Level</h2>
+
+            {% if risk_level == "Low" %}
+                <p class="low-risk">🟢 Low</p>
+
+            {% elif risk_level == "Medium" %}
+                <p class="medium-risk">🟡 Medium</p>
+
+            {% elif risk_level == "High" %}
+                <p class="high-risk">🔴 High</p>
+
+            {% else %}
+                <p>--</p>
+
+            {% endif %}
+
+        </div>
+
+        <!-- Priority -->
+
+        <div class="card">
+
+            <h2>Testing Priority</h2>
+
+            <p>
+                {% if priority %}
+                    {{ priority }}
+                {% else %}
+                    --
+                {% endif %}
+            </p>
+
+        </div>
+
+        <!-- Prediction -->
+
+        <div class="card">
+
+            <h2>Prediction Result</h2>
+
+            {% if prediction == 1 %}
+
+                <p class="high-risk">
+                    ⚠ Defective Module
                 </p>
 
-            </div>
+            {% elif prediction == 0 %}
 
-            <!-- Prediction Result -->
+                <p class="low-risk">
+                    ✅ Healthy Module
+                </p>
 
-            <div class="card">
+            {% else %}
 
-                <h3>Prediction Result</h3>
+                <p>--</p>
 
-                {% if prediction == 1 %}
-                    <p class="high-risk">
-                        ⚠ Defective Module
-                    </p>
-
-                {% elif prediction == 0 %}
-                    <p class="low-risk">
-                        ✔ Healthy Module
-                    </p>
-
-                {% else %}
-                    <p>--</p>
-
-                {% endif %}
-
-            </div>
+            {% endif %}
 
         </div>
 
-    </section>
+    </div>
 
-    <!-- TOP RISK FACTORS -->
+    <!-- DYNAMIC RISK FACTORS -->
 
-    {% if risk_score %}
+    {% if risk_factors %}
 
-    <section class="risk-factors">
+    
 
-        <div class="card factor-card">
-
-            <h2>🔥 Top Risk Factors</h2>
-
-            <ul>
-
-                <li>Cyclomatic Complexity affects maintainability</li>
-
-                <li>High Program Length increases defect probability</li>
-
-                <li>Large Halstead Volume indicates complexity</li>
-
-                <li>Branch Count impacts testing effort</li>
-
-            </ul>
-
-        </div>
-
-    </section>
-
+  
     {% endif %}
-{% if history %}
 
-<div class="history-section">
+    <div class="card explanation-card">
 
-    <h2>📊 Recent Predictions</h2>
+    <h2>🤖 AI Risk Assessment</h2>
 
-    <table>
+    <p class="explanation-text">
 
-        <tr>
-            <th>Risk Score</th>
-            <th>Risk Level</th>
-            <th>Priority</th>
-            <th>Prediction</th>
-        </tr>
+        <strong>Prediction Result:</strong>
 
-        {% for row in history %}
+        {% if prediction == 1 %}
+            Defective Module
+        {% else %}
+            Healthy Module
+        {% endif %}
 
-        <tr>
-            <td>{{ row[0] }}</td>
-            <td>{{ row[1] }}</td>
-            <td>{{ row[2] }}</td>
-            <td>{{ row[3] }}</td>
-        </tr>
+        <br><br>
+
+        <strong>Confidence Level:</strong>
+
+        {{ risk_level }} Risk ({{ risk_score }}%)
+
+        <br><br>
+
+        The model identified multiple software metrics that are
+        typically associated with increased defect probability.
+
+    </p>
+
+    <h3>Primary Risk Drivers</h3>
+
+    <ul class="factor-list">
+
+        {% for feature, importance in top_features %}
+
+        <li>
+            • {{ feature }}
+            ({{ importance }}%)
+        </li>
 
         {% endfor %}
 
-    </table>
+    </ul>
+
+    <h3>Recommended Actions</h3>
+
+    <ul class="factor-list">
+        <li>✓ Perform detailed code review</li>
+        <li>✓ Increase unit test coverage</li>
+        <li>✓ Conduct static code analysis</li>
+        <li>✓ Prioritize regression testing</li>
+        <li>✓ Monitor high-complexity functions</li>
+    </ul>
+
+    <h3>Conclusion</h3>
+
+    <p class="explanation-text">
+
+        Based on historical software quality patterns learned
+        from the NASA JM1 dataset, this module should be treated
+        as a higher-risk component and assigned additional
+        testing resources before release.
+
+    </p>
 
 </div>
 
-{% endif %}
+    <!-- RECENT PREDICTIONS -->
+
+    {% if history %}
+
+    <div class="history-section">
+
+        <h2>📊 Recent Predictions</h2>
+
+        <table>
+
+            <tr>
+                <th>Risk Score</th>
+                <th>Risk Level</th>
+                <th>Priority</th>
+                <th>Prediction</th>
+            </tr>
+
+            {% for row in history %}
+
+            <tr>
+
+                <td>{{ row[0] }}</td>
+                <td>{{ row[1] }}</td>
+                <td>{{ row[2] }}</td>
+                <td>{{ row[3] }}</td>
+
+            </tr>
+
+            {% endfor %}
+
+        </table>
+
+    </div>
+
+    {% endif %}
+
+    
     <!-- FOOTER -->
 
     <footer>

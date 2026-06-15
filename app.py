@@ -31,9 +31,12 @@ def load_prediction_history():
 def home():
     return render_template(
         "index.html",
+        prediction=None,
         risk_score=None,
         risk_level=None,
-        priority=None
+        priority=None,
+        history=load_prediction_history(),
+        risk_factors=[]
     )
 
 @app.route('/predict', methods=['POST'])
@@ -69,24 +72,44 @@ float(request.form["branchcount"])
     print("Prediction:", prediction)
     print("Probability:", probability)
     risk_score = round(probability * 100, 2)
+    # Determine risk factors
+    risk_factors = []
 
-    if risk_score <= 30:
+    if float(request.form["vg"]) > 20:
+        risk_factors.append(f"⚠ High Cyclomatic Complexity ({request.form['vg']})")
+
+    if float(request.form["loc"]) > 300:
+        risk_factors.append(f"⚠ Large LOC ({request.form['loc']})")
+
+    if float(request.form["v"]) > 1000:
+        risk_factors.append(f"⚠ High Halstead Volume ({request.form['v']})")
+
+    if float(request.form["branchcount"]) > 30:
+        risk_factors.append(f"⚠ High Branch Count ({request.form['branchcount']})")
+
+    if len(risk_factors) == 0:
+        risk_factors.append("✅ No major risk factors detected")
+
+    # Determine risk level and priority from risk score
+    if risk_score <= 40:
         risk_level = "Low"
         priority = "Priority 3"
-    elif risk_score <= 70:
+    elif risk_score <= 60:
         risk_level = "Medium"
         priority = "Priority 2"
     else:
         risk_level = "High"
         priority = "Priority 1"
 
-        
-    prediction_text = (
-        "Defective Module"
-        if prediction == 1
-        else "Healthy Module"
-    )
+    prediction_text = "Defective Module" if prediction == 1 else "Healthy Module"
 
+    top_features = [
+        ("LOC", 13.2),
+        ("Logical LOC", 5.65),
+        ("Halstead Volume", 5.51),
+        ("Intelligence", 5.49),
+        ("Time Estimate", 5.36)
+    ]
     # Save prediction to history
     file_path = "reports/prediction_history.csv"
     os.makedirs("reports", exist_ok=True)
@@ -105,7 +128,9 @@ float(request.form["branchcount"])
         risk_score=risk_score,
         risk_level=risk_level,
         priority=priority,
-        history=history
+        history=history,
+        risk_factors=risk_factors,
+        top_features=top_features,
     )
 
 if __name__ == "__main__":
