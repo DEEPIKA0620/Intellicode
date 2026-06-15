@@ -216,3 +216,25 @@ footer{
     font-size: 14px;
     padding-bottom: 20px;
 }
+
+.history-section{
+    width:80%;
+    margin:40px auto;
+}
+
+table{
+    width:100%;
+    border-collapse:collapse;
+    background:white;
+}
+
+th, td{
+    border:1px solid #ddd;
+    padding:12px;
+    text-align:center;
+}
+
+th{
+    background:#3498db;
+    color:white;
+}

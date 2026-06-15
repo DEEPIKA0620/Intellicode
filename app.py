@@ -1,5 +1,4 @@
 import os
-
 from flask import Flask, render_template, request
 import joblib
 import numpy as np
@@ -10,6 +9,23 @@ app = Flask(__name__)
 
 # Load trained model
 rf = joblib.load("model/defect_model.pkl")
+
+def load_prediction_history():
+
+    file_path = "reports/prediction_history.csv"
+
+    if not os.path.exists(file_path):
+        return []
+
+    with open(file_path, "r") as file:
+
+        reader = csv.reader(file)
+
+        next(reader, None)
+
+        rows = list(reader)
+
+    return rows[-5:]
 
 @app.route('/')
 def home():
@@ -63,6 +79,14 @@ float(request.form["branchcount"])
     else:
         risk_level = "High"
         priority = "Priority 1"
+
+        
+    prediction_text = (
+        "Defective Module"
+        if prediction == 1
+        else "Healthy Module"
+    )
+
     # Save prediction to history
     file_path = "reports/prediction_history.csv"
     os.makedirs("reports", exist_ok=True)
@@ -71,14 +95,17 @@ float(request.form["branchcount"])
         writer = csv.writer(file)
         if not file_exists:
             writer.writerow(["Risk Score", "Risk Level", "Priority", "Prediction"])
-        writer.writerow([risk_score, risk_level, priority, int(prediction)])
+        writer.writerow([risk_score, risk_level, priority, prediction_text])
 
+    history = load_prediction_history()
     return render_template(
         "index.html",
         prediction=int(prediction),
+        prediction_text=prediction_text,
         risk_score=risk_score,
         risk_level=risk_level,
-        priority=priority
+        priority=priority,
+        history=history
     )
 
 if __name__ == "__main__":
