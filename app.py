@@ -4,6 +4,7 @@ import joblib
 import numpy as np
 import csv
 import os
+import matplotlib.pyplot as plt
 
 app = Flask(__name__)
 
@@ -27,6 +28,36 @@ def load_prediction_history():
 
     return rows[-5:]
 
+def generate_feature_chart():
+
+    features = [
+        "LOC",
+        "Logical LOC",
+        "Halstead Volume",
+        "Intelligence",
+        "Time Estimate"
+    ]
+
+    importance = [
+        13.2,
+        5.65,
+        5.51,
+        5.49,
+        5.36
+    ]
+
+    plt.figure(figsize=(8,4))
+    plt.barh(features, importance)
+
+    plt.xlabel("Importance (%)")
+    plt.title("Top Risk Drivers")
+
+    plt.tight_layout()
+
+    plt.savefig("static/feature_importance.png")
+
+    plt.close()
+
 @app.route('/')
 def home():
     return render_template(
@@ -36,7 +67,9 @@ def home():
         risk_level=None,
         priority=None,
         history=load_prediction_history(),
-        risk_factors=[]
+        risk_factors=[],
+        top_features=[],
+        overall_assessment=""
     )
 
 @app.route('/predict', methods=['POST'])
@@ -72,6 +105,7 @@ float(request.form["branchcount"])
     print("Prediction:", prediction)
     print("Probability:", probability)
     risk_score = round(probability * 100, 2)
+    generate_feature_chart()
     # Determine risk factors
     risk_factors = []
 
@@ -110,6 +144,27 @@ float(request.form["branchcount"])
         ("Intelligence", 5.49),
         ("Time Estimate", 5.36)
     ]
+
+    if risk_score >= 70:
+        overall_assessment = """
+        This module exhibits elevated software complexity and
+        defect-prone characteristics. Additional testing,
+        code review, and quality assurance efforts are strongly
+        recommended before deployment.
+        """
+    elif risk_score >= 40:
+        overall_assessment = """
+        This module shows moderate risk indicators.
+        Targeted testing and focused code review are
+        recommended to improve software reliability.
+        """
+    else:
+        overall_assessment = """
+        The software metrics indicate a stable and maintainable
+        module with a relatively low probability of defects.
+        Standard testing procedures should be sufficient.
+        """
+
     # Save prediction to history
     file_path = "reports/prediction_history.csv"
     os.makedirs("reports", exist_ok=True)
@@ -131,6 +186,7 @@ float(request.form["branchcount"])
         history=history,
         risk_factors=risk_factors,
         top_features=top_features,
+        overall_assessment=overall_assessment
     )
 
 if __name__ == "__main__":

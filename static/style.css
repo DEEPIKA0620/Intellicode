@@ -239,37 +239,55 @@ th{
     color:white;
 }
 
-.explanation-card{
-    width:85%;
-    max-width:900px;
-    margin:30px auto;
-    padding:30px;
-    text-align:left;
+.explanation-card {
+    width: 90% !important;
+    max-width: 1200px;
+    margin: 40px auto;
+    padding: 30px;
+
+    background: white;
+    border-radius: 15px;
+
+    box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+
+    text-align: left;
 }
 
-.explanation-card h2{
-    text-align:center;
-    color:#2c3e50;
-    margin-bottom:25px;
+.explanation-card h2 {
+    text-align: center;
 }
-
 .explanation-card h3{
+    color:#2c3e50;
     margin-top:20px;
-    color:#34495e;
+    color: #2c3e50;
+    margin-bottom: 25px;
 }
 
-.explanation-text{
-    font-size:18px;
-    line-height:1.8;
-}
-
-.factor-list{
-    margin-top:10px;
+.factor-list,
+.action-list {
     padding-left:25px;
 }
 
-.factor-list li{
-    margin-bottom:12px;
-    font-size:17px;
-    line-height:1.6;
+.chart-section {
+    text-align: center;
+    margin: 30px 0;
+}
+
+.importance-chart {
+    max-width: 100%;
+    border-radius: 10px;
+}
+
+.assessment-box {
+    background: #f8f9fa;
+    padding: 20px;
+    border-left: 5px solid #3498db;
+    border-radius: 10px;
+    margin-top: 15px;
+}
+
+.assessment-box p {
+    margin: 0;
+    line-height: 1.8;
+    font-size: 16px;
 }
