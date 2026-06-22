@@ -58,8 +58,52 @@ def generate_feature_chart():
 
     plt.close()
 
+def get_dashboard_stats():
+
+    file_path = "reports/prediction_history.csv"
+
+    if not os.path.exists(file_path):
+        return 0,0,0,0
+
+    with open(file_path,"r") as file:
+
+        reader = csv.DictReader(file)
+
+        rows = list(reader)
+
+    total_predictions = len(rows)
+
+    healthy_count = sum(
+        1 for row in rows
+        if row["Prediction"] == "Healthy Module"
+    )
+
+    defective_count = sum(
+        1 for row in rows
+        if row["Prediction"] == "Defective Module"
+    )
+
+    if total_predictions > 0:
+
+        avg_risk = round(
+            sum(float(row["Risk Score"]) for row in rows)
+            / total_predictions,
+            2
+        )
+
+    else:
+        avg_risk = 0
+
+    return (
+        total_predictions,
+        healthy_count,
+        defective_count,
+        avg_risk
+    )    
+
 @app.route('/')
 def home():
+    total_predictions, healthy_count, defective_count, avg_risk = get_dashboard_stats()
     return render_template(
         "index.html",
         prediction=None,
@@ -69,8 +113,12 @@ def home():
         history=load_prediction_history(),
         risk_factors=[],
         top_features=[],
-        overall_assessment=""
-    )
+        overall_assessment="",
+        total_predictions=total_predictions,
+        healthy_count=healthy_count,
+        defective_count=defective_count,
+        avg_risk=avg_risk,
+)
 
 @app.route('/predict', methods=['POST'])
 def predict():
@@ -176,6 +224,7 @@ float(request.form["branchcount"])
         writer.writerow([risk_score, risk_level, priority, prediction_text])
 
     history = load_prediction_history()
+    total_predictions, healthy_count, defective_count, avg_risk = get_dashboard_stats()
     return render_template(
         "index.html",
         prediction=int(prediction),
@@ -186,7 +235,11 @@ float(request.form["branchcount"])
         history=history,
         risk_factors=risk_factors,
         top_features=top_features,
-        overall_assessment=overall_assessment
+        overall_assessment=overall_assessment,
+        total_predictions=total_predictions,
+        healthy_count=healthy_count,
+        defective_count=defective_count,
+        avg_risk=avg_risk
     )
 
 if __name__ == "__main__":

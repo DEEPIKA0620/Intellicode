@@ -1,5 +1,5 @@
 Risk Score,Risk Level,Priority,Prediction
-58.0,Medium,Priority 2,1
+58.0,Medium,Priority 2,Defective Module
 58.0,Medium,Priority 2,Defective Module
 54.0,Medium,Priority 2,Defective Module
 50.0,Medium,Priority 2,Healthy Module
@@ -13,3 +13,5 @@ Risk Score,Risk Level,Priority,Prediction
 66.0,High,Priority 1,Defective Module
 48.0,Medium,Priority 2,Healthy Module
 58.0,Medium,Priority 2,Defective Module
+56.0,Medium,Priority 2,Defective Module
+56.0,Medium,Priority 2,Defective Module
