@@ -64,6 +64,23 @@
 
     </form>
 
+    <hr>
+
+<h2>📂 Bulk Prediction</h2>
+
+<form action="/upload_csv" method="POST" enctype="multipart/form-data">
+
+    <input type="file"
+           name="csv_file"
+           accept=".csv"
+           required>
+
+    <button type="submit" class="predict-btn">
+        Upload CSV
+    </button>
+
+</form>
+
     <!-- RESULTS DASHBOARD -->
 
     <div class="dashboard">

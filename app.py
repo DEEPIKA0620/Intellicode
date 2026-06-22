@@ -5,6 +5,7 @@ import numpy as np
 import csv
 import os
 import matplotlib.pyplot as plt
+import pandas as pd
 
 app = Flask(__name__)
 
@@ -240,6 +241,50 @@ float(request.form["branchcount"])
         healthy_count=healthy_count,
         defective_count=defective_count,
         avg_risk=avg_risk
+    )
+
+@app.route('/upload_csv', methods=['POST'])
+def upload_csv():
+    file = request.files['csv_file']
+
+    if file.filename == '':
+        return "No file selected"
+
+    df = pd.read_csv(file)
+    # Replace ? with NaN
+    df.replace("?", np.nan, inplace=True)
+
+    # Convert everything to numeric
+    df = df.apply(pd.to_numeric, errors="coerce")
+
+    # Fill missing values
+    df.fillna(df.median(), inplace=True)
+
+    # Remove columns not used by model
+    df = df.drop(columns=["id", "defects"], errors="ignore")
+
+    print(df.columns.tolist())
+
+    predictions = rf.predict(df)
+
+    probabilities = rf.predict_proba(df)[:, 1]
+
+    df["Risk Score"] = (probabilities * 100).round(2)
+
+    df["Prediction"] = [
+        "Defective Module" if p == 1
+        else "Healthy Module"
+        for p in predictions
+    ]
+
+    output_file = "reports/bulk_predictions.csv"
+
+    os.makedirs("reports", exist_ok=True)
+    df.to_csv(output_file, index=False)
+
+    return render_template(
+        "bulk_results.html",
+        tables=[df.to_html(classes="data")]
     )
 
 if __name__ == "__main__":
