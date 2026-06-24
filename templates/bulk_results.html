@@ -42,6 +42,18 @@
             <p>{{ avg_risk }}%</p>
         </div>
 
+        <div class="card">
+
+    <h2>Highest Risk Module</h2>
+
+    <p>#{{ highest_module }}</p>
+
+    <span class="high-risk">
+        {{ highest_risk }}%
+    </span>
+
+</div>
+
     </div>
 
     <div class="download-section">
@@ -59,6 +71,40 @@
         width="400"
     >
 </div>
+
+<div class="risk-table-card">
+<h2>🚨 Top High-Risk Modules</h2>
+
+<table>
+
+    <tr>
+        <th>Module ID</th>
+        <th>Risk Score</th>
+        <th>Prediction</th>
+    </tr>
+
+    {% for module in top_risk_modules %}
+
+    <tr>
+
+        <td>{{ module["Module ID"] }}</td>
+
+        <td>
+            {{ module["Risk Score"] }}%
+        </td>
+
+        <td>
+            {{ module["Prediction"] }}
+        </td>
+
+    </tr>
+
+    {% endfor %}
+
+</table>
+
+</div>
+
 
     <!-- Results Table -->
 

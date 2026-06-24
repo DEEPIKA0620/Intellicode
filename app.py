@@ -263,11 +263,14 @@ def upload_csv():
     # Remove columns not used by model
     df = df.drop(columns=["id", "defects"], errors="ignore")
 
+
     print(df.columns.tolist())
 
     predictions = rf.predict(df)
 
     probabilities = rf.predict_proba(df)[:, 1]
+
+    df["Module ID"] = range(1, len(df) + 1)
 
     df["Risk Score"] = (probabilities * 100).round(2)
 
@@ -276,6 +279,25 @@ def upload_csv():
         else "Healthy Module"
         for p in predictions
     ]
+
+    top_risk_modules = (
+    df.sort_values(
+        by="Risk Score",
+        ascending=False
+    )
+    .head(10)
+    .to_dict("records")
+    )
+
+    highest_module = df.sort_values(
+        by="Risk Score",
+        ascending=False
+    ).iloc[0]["Module ID"]
+
+    highest_risk = df.sort_values(
+        by="Risk Score",
+        ascending=False
+    ).iloc[0]["Risk Score"]
 
     output_file = "reports/bulk_predictions.csv"
 
@@ -322,10 +344,14 @@ def upload_csv():
 
         avg_risk=avg_risk,
 
-        table_html=df.to_html(
+        highest_module=highest_module,
+        highest_risk=highest_risk,
+
+        table_html=df.head(20).to_html(
             classes="results-table",
             index=False
-        )
+        ),
+        top_risk_modules=top_risk_modules
     )
 
 @app.route('/download_report')
