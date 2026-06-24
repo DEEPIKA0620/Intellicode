@@ -1,17 +1,82 @@
 <!DOCTYPE html>
 <html>
+
 <head>
     <title>Bulk Prediction Results</title>
+
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='style.css') }}">
 </head>
+
 <body>
 
-<h1>📊 Bulk Prediction Results</h1>
+<div class="container">
 
-{{ tables[0] | safe }}
+    <h1>📂 Bulk Prediction Results</h1>
 
-<br>
+    <p class="subtitle">
+        AI-Powered Analysis of Uploaded Software Modules
+    </p>
 
-<a href="/">⬅ Back to Dashboard</a>
+    <!-- Summary Cards -->
+
+    <div class="dashboard">
+
+        <div class="card">
+            <h2>Total Modules</h2>
+            <p>{{ total_modules }}</p>
+        </div>
+
+        <div class="card">
+            <h2>Healthy</h2>
+            <p class="low-risk">{{ healthy_count }}</p>
+        </div>
+
+        <div class="card">
+            <h2>Defective</h2>
+            <p class="high-risk">{{ defective_count }}</p>
+        </div>
+
+        <div class="card">
+            <h2>Average Risk</h2>
+            <p>{{ avg_risk }}%</p>
+        </div>
+
+    </div>
+
+    <div class="download-section">
+    <a href="/download_report" class="predict-btn">
+        📥 Download Report
+    </a>
+</div>
+
+<div class="chart-card">
+    <h2>Module Distribution</h2>
+
+    <img
+        src="{{ url_for('static', filename='bulk_pie_chart.png') }}"
+        alt="Pie Chart"
+        width="400"
+    >
+</div>
+
+    <!-- Results Table -->
+
+    <div class="table-card">
+
+        <h2>Prediction Results</h2>
+
+        <div class="table-container">
+    {{ table_html|safe }}
+</div>
+
+    </div>
+
+    <a href="/" class="back-btn">
+        ← Back to IntelliCode
+    </a>
+
+</div>
 
 </body>
 </html>

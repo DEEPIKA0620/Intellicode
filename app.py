@@ -1,5 +1,5 @@
 import os
-from flask import Flask, render_template, request
+from flask import Flask, render_template, request, send_file
 import joblib
 import numpy as np
 import csv
@@ -282,10 +282,57 @@ def upload_csv():
     os.makedirs("reports", exist_ok=True)
     df.to_csv(output_file, index=False)
 
-    return render_template(
-        "bulk_results.html",
-        tables=[df.to_html(classes="data")]
+    total_modules = len(df)
+
+    defective_modules = len(
+        df[df["Prediction"] == "Defective Module"]
     )
 
+    healthy_modules = len(
+        df[df["Prediction"] == "Healthy Module"]
+    )
+
+    avg_risk = round(
+        df["Risk Score"].mean(),
+        2
+    )
+    # Generate pie chart
+    plt.figure(figsize=(5,5))
+
+    plt.pie(
+        [healthy_modules, defective_modules],
+        labels=["Healthy", "Defective"],
+        autopct="%1.1f%%"
+    )
+
+    plt.title("Module Distribution")
+
+    plt.savefig("static/bulk_pie_chart.png")
+
+    plt.close()
+
+    return render_template(
+        "bulk_results.html",
+
+        total_modules=total_modules,
+
+        healthy_count=healthy_modules,
+
+        defective_count=defective_modules,
+
+        avg_risk=avg_risk,
+
+        table_html=df.to_html(
+            classes="results-table",
+            index=False
+        )
+    )
+
+@app.route('/download_report')
+def download_report():
+    return send_file(
+        "reports/bulk_predictions.csv",
+        as_attachment=True
+    )
 if __name__ == "__main__":
     app.run(debug=True)
