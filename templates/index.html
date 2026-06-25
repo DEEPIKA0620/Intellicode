@@ -1,4 +1,3 @@
-```html
 <!DOCTYPE html>
 <html lang="en">
 
@@ -285,3 +284,300 @@
 
     </section>
 ```
+    <!-- Prediction Results -->
+
+    {% if prediction is defined and prediction is not none %}
+
+    <section class="results-section">
+
+        <div class="section-title">
+            <h2>Prediction Intelligence Dashboard</h2>
+            <p>AI-generated software quality assessment</p>
+        </div>
+
+        <div class="dashboard-grid">
+
+            <div class="result-card">
+                <h3>Risk Score</h3>
+
+                <div class="score-value">
+                    {{ risk_score }}%
+                </div>
+
+                <div class="progress-wrapper">
+                    <div class="progress-bar"
+                         style="width: {{ risk_score }}%">
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="result-card">
+                <h3>Risk Level</h3>
+
+                {% if risk_level == "High" %}
+                    <div class="badge danger">
+                        High Risk
+                    </div>
+
+                {% elif risk_level == "Medium" %}
+                    <div class="badge warning">
+                        Medium Risk
+                    </div>
+
+                {% else %}
+                    <div class="badge success">
+                        Low Risk
+                    </div>
+                {% endif %}
+
+            </div>
+
+            <div class="result-card">
+                <h3>Testing Priority</h3>
+
+                <div class="priority-value">
+                    {{ priority }}
+                </div>
+            </div>
+
+            <div class="result-card">
+
+                <h3>Prediction</h3>
+
+                {% if prediction == 1 %}
+                    <div class="badge danger">
+                        Defective Module
+                    </div>
+                {% else %}
+                    <div class="badge success">
+                        Healthy Module
+                    </div>
+                {% endif %}
+
+            </div>
+
+        </div>
+
+    </section>
+
+    <!-- AI Explanation -->
+
+    <section class="ai-section">
+
+        <div class="section-title">
+            <h2>Explainable AI Analysis</h2>
+            <p>Why the model reached this prediction</p>
+        </div>
+
+        <div class="ai-card">
+
+            <div class="analysis-summary">
+
+                <h3>
+
+                    {% if prediction == 1 %}
+                        Defective Module Detected
+                    {% else %}
+                        Healthy Module Identified
+                    {% endif %}
+
+                </h3>
+
+                <p>
+                    Risk Confidence:
+                    <strong>{{ risk_score }}%</strong>
+                </p>
+
+            </div>
+
+            <!-- Feature Importance -->
+
+            <div class="chart-container">
+
+                <h3>Top Risk Drivers</h3>
+
+                <img
+                    src="{{ url_for('static', filename='feature_importance.png') }}"
+                    alt="Feature Importance Chart"
+                    class="importance-chart-small">
+
+            </div>
+
+            <!-- Top Features -->
+
+            <div class="features-grid">
+
+                {% for feature, importance in top_features %}
+
+                <div class="feature-card">
+
+                    <h4>{{ feature }}</h4>
+
+                    <span>
+                        {{ importance }}%
+                    </span>
+
+                </div>
+
+                {% endfor %}
+
+            </div>
+
+            <!-- Recommended Actions -->
+
+            <div class="recommendations">
+
+                <h3>Recommended Actions</h3>
+
+                <ul>
+
+                    <li>Perform detailed code review</li>
+
+                    <li>Increase unit test coverage</li>
+
+                    <li>Conduct static code analysis</li>
+
+                    <li>Prioritize regression testing</li>
+
+                    <li>Review complex functions and modules</li>
+
+                </ul>
+
+            </div>
+
+            <!-- Assessment -->
+
+            <div class="assessment-box">
+
+                <h3>Overall Assessment</h3>
+
+                <p>
+                    {{ overall_assessment }}
+                </p>
+
+            </div>
+
+        </div>
+
+    </section>
+
+    {% endif %}
+
+    <!-- Analytics Dashboard -->
+
+    <section class="analytics-section">
+
+        <div class="section-title">
+            <h2>Project Analytics</h2>
+            <p>Historical prediction insights</p>
+        </div>
+
+        <div class="analytics-grid">
+
+            <div class="analytics-card">
+                <h3>Total Predictions</h3>
+                <span>{{ total_predictions }}</span>
+            </div>
+
+            <div class="analytics-card">
+                <h3>Healthy Modules</h3>
+                <span>{{ healthy_count }}</span>
+            </div>
+
+            <div class="analytics-card">
+                <h3>Defective Modules</h3>
+                <span>{{ defective_count }}</span>
+            </div>
+
+            <div class="analytics-card">
+                <h3>Average Risk</h3>
+                <span>{{ avg_risk }}%</span>
+            </div>
+
+        </div>
+
+    </section>
+
+    <!-- Prediction History -->
+
+    {% if history %}
+
+    <section class="history-section">
+
+        <div class="section-title">
+            <h2>Recent Predictions</h2>
+            <p>Latest software quality assessments</p>
+        </div>
+
+        <div class="table-wrapper">
+
+            <table>
+
+                <thead>
+
+                    <tr>
+
+                        <th>Risk Score</th>
+
+                        <th>Risk Level</th>
+
+                        <th>Priority</th>
+
+                        <th>Prediction</th>
+
+                    </tr>
+
+                </thead>
+
+                <tbody>
+
+                    {% for row in history %}
+
+                    <tr>
+
+                        <td>{{ row[0] }}</td>
+
+                        <td>{{ row[1] }}</td>
+
+                        <td>{{ row[2] }}</td>
+
+                        <td>{{ row[3] }}</td>
+
+                    </tr>
+
+                    {% endfor %}
+
+                </tbody>
+
+            </table>
+
+        </div>
+
+    </section>
+
+    {% endif %}
+
+</div>
+
+<footer>
+
+    <div class="footer-content">
+
+        <h3>IntelliCode</h3>
+
+        <p>
+            AI-Powered Software Defect Prediction &
+            Code Quality Intelligence Platform
+        </p>
+
+        <span>
+            © 2026 IntelliCode. All Rights Reserved.
+        </span>
+
+    </div>
+
+</footer>
+
+</body>
+</html>
