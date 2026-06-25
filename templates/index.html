@@ -1,353 +1,287 @@
+```html
 <!DOCTYPE html>
 <html lang="en">
 
 <head>
+
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
     <title>IntelliCode</title>
+
+    <link rel="preconnect"
+          href="https://fonts.googleapis.com">
+
+    <link rel="preconnect"
+          href="https://fonts.gstatic.com"
+          crossorigin>
+
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+          rel="stylesheet">
 
     <link rel="stylesheet"
           href="{{ url_for('static', filename='style.css') }}">
+
 </head>
 
 <body>
 
 <div class="container">
 
-    <!-- HEADER -->
+    <!-- ===================================== -->
+    <!-- HERO SECTION -->
+    <!-- ===================================== -->
 
-    <h1> IntelliCode</h1>
+    <section class="hero">
 
-    <p class="subtitle">
-        AI-Powered Software Defect Prediction & Code Quality Intelligence Platform
-    </p>
+        <div class="hero-content">
 
-    <!-- INPUT FORM -->
+            <h1>IntelliCode</h1>
 
-    <form action="/predict" method="POST">
+            <p class="hero-subtitle">
+                AI-Powered Software Defect Prediction &
+                Code Quality Intelligence Platform
+            </p>
 
-        <div class="input-grid">
-
-            <input type="number" name="loc" placeholder="LOC" required>
-            <input type="number" name="vg" placeholder="Cyclomatic Complexity" required>
-            <input type="number" name="evg" placeholder="Essential Complexity" required>
-
-            <input type="number" name="ivg" placeholder="Design Complexity" required>
-            <input type="number" name="n" placeholder="Program Length" required>
-            <input type="number" name="v" placeholder="Halstead Volume" required>
-
-            <input type="number" step="any" name="l" placeholder="Program Level" required>
-            <input type="number" name="d" placeholder="Difficulty" required>
-            <input type="number" name="i" placeholder="Intelligence" required>
-
-            <input type="number" name="e" placeholder="Effort" required>
-            <input type="number" step="any" name="b" placeholder="Bugs" required>
-            <input type="number" name="t" placeholder="Time Estimate" required>
-
-            <input type="number" name="locode" placeholder="Logical LOC" required>
-            <input type="number" name="locomment" placeholder="Comments" required>
-            <input type="number" name="loblank" placeholder="Blank Lines" required>
-
-            <input type="number" name="loccodecomment" placeholder="Code + Comment" required>
-            <input type="number" name="uniqop" placeholder="Unique Operators" required>
-            <input type="number" name="uniqopnd" placeholder="Unique Operands" required>
-
-            <input type="number" name="totalop" placeholder="Total Operators" required>
-            <input type="number" name="totalopnd" placeholder="Total Operands" required>
-            <input type="number" name="branchcount" placeholder="Branch Count" required>
+            <p class="hero-description">
+                Predict software defects before deployment,
+                identify high-risk modules, prioritize testing,
+                and improve software reliability using
+                Machine Learning.
+            </p>
 
         </div>
 
-        <button type="submit" class="predict-btn">
-            Predict Module Risk
-        </button>
+    </section>
 
-    </form>
+    <!-- ===================================== -->
+    <!-- ANALYTICS OVERVIEW -->
+    <!-- ===================================== -->
 
-    <hr>
+    <section class="analytics-dashboard">
 
-<h2>📂 Bulk Prediction</h2>
+        <div class="analytics-card">
 
-<form action="/upload_csv" method="POST" enctype="multipart/form-data">
+            <h3>Total Predictions</h3>
 
-    <input type="file"
-           name="csv_file"
-           accept=".csv"
-           required>
+            <p>{{ total_predictions }}</p>
 
-    <button type="submit" class="predict-btn">
-        Upload CSV
-    </button>
+        </div>
 
-</form>
+        <div class="analytics-card">
 
-    <!-- RESULTS DASHBOARD -->
+            <h3>Healthy Modules</h3>
 
-    <div class="dashboard">
-
-        <!-- Risk Score -->
-
-        <div class="card">
-
-            <h2>Risk Score</h2>
-
-            <p>
-                {% if risk_score %}
-                    {{ risk_score }}%
-                {% else %}
-                    --
-                {% endif %}
+            <p class="healthy-number">
+                {{ healthy_count }}
             </p>
 
-            {% if risk_score %}
+        </div>
 
-            <div class="progress-container">
+        <div class="analytics-card">
 
-                <div class="progress-bar"
-                     style="width: {{ risk_score }}%;">
-                </div>
+            <h3>Defective Modules</h3>
+
+            <p class="defective-number">
+                {{ defective_count }}
+            </p>
+
+        </div>
+
+        <div class="analytics-card">
+
+            <h3>Average Risk</h3>
+
+            <p>
+                {{ avg_risk }}%
+            </p>
+
+        </div>
+
+    </section>
+
+    <!-- ===================================== -->
+    <!-- INPUT SECTION -->
+    <!-- ===================================== -->
+
+    <section class="form-section">
+
+        <div class="section-header">
+
+            <h2>Manual Software Metrics Analysis</h2>
+
+            <p>
+                Enter software engineering metrics
+                to predict defect probability.
+            </p>
+
+        </div>
+
+        <form action="/predict"
+              method="POST">
+
+            <div class="input-grid">
+
+                <input type="number"
+                       name="loc"
+                       placeholder="LOC"
+                       required>
+
+                <input type="number"
+                       name="vg"
+                       placeholder="Cyclomatic Complexity"
+                       required>
+
+                <input type="number"
+                       name="evg"
+                       placeholder="Essential Complexity"
+                       required>
+
+                <input type="number"
+                       name="ivg"
+                       placeholder="Design Complexity"
+                       required>
+
+                <input type="number"
+                       name="n"
+                       placeholder="Program Length"
+                       required>
+
+                <input type="number"
+                       name="v"
+                       placeholder="Halstead Volume"
+                       required>
+
+                <input type="number"
+                       step="any"
+                       name="l"
+                       placeholder="Program Level"
+                       required>
+
+                <input type="number"
+                       name="d"
+                       placeholder="Difficulty"
+                       required>
+
+                <input type="number"
+                       name="i"
+                       placeholder="Intelligence"
+                       required>
+
+                <input type="number"
+                       name="e"
+                       placeholder="Effort"
+                       required>
+
+                <input type="number"
+                       step="any"
+                       name="b"
+                       placeholder="Estimated Bugs"
+                       required>
+
+                <input type="number"
+                       name="t"
+                       placeholder="Time Estimate"
+                       required>
+
+                <input type="number"
+                       name="locode"
+                       placeholder="Logical LOC"
+                       required>
+
+                <input type="number"
+                       name="locomment"
+                       placeholder="Comment Lines"
+                       required>
+
+                <input type="number"
+                       name="loblank"
+                       placeholder="Blank Lines"
+                       required>
+
+                <input type="number"
+                       name="loccodecomment"
+                       placeholder="Code + Comment"
+                       required>
+
+                <input type="number"
+                       name="uniqop"
+                       placeholder="Unique Operators"
+                       required>
+
+                <input type="number"
+                       name="uniqopnd"
+                       placeholder="Unique Operands"
+                       required>
+
+                <input type="number"
+                       name="totalop"
+                       placeholder="Total Operators"
+                       required>
+
+                <input type="number"
+                       name="totalopnd"
+                       placeholder="Total Operands"
+                       required>
+
+                <input type="number"
+                       name="branchcount"
+                       placeholder="Branch Count"
+                       required>
 
             </div>
 
-            {% endif %}
+            <button type="submit"
+                    class="predict-btn">
 
-        </div>
+                Analyze Module Risk
 
-        <!-- Risk Level -->
+            </button>
 
-        <div class="card">
+        </form>
 
-            <h2>Risk Level</h2>
+    </section>
 
-            {% if risk_level == "Low" %}
-                <p class="low-risk">🟢 Low</p>
+    <!-- ===================================== -->
+    <!-- BULK PREDICTION SECTION -->
+    <!-- ===================================== -->
 
-            {% elif risk_level == "Medium" %}
-                <p class="medium-risk">🟡 Medium</p>
+    <section class="bulk-section">
 
-            {% elif risk_level == "High" %}
-                <p class="high-risk">🔴 High</p>
+        <div class="section-header">
 
-            {% else %}
-                <p>--</p>
-
-            {% endif %}
-
-        </div>
-
-        <!-- Priority -->
-
-        <div class="card">
-
-            <h2>Testing Priority</h2>
+            <h2>Bulk Software Analysis</h2>
 
             <p>
-                {% if priority %}
-                    {{ priority }}
-                {% else %}
-                    --
-                {% endif %}
+                Upload a NASA JM1 compatible dataset
+                and analyze hundreds of modules instantly.
             </p>
 
         </div>
 
-        <!-- Prediction -->
+        <form action="/upload_csv"
+              method="POST"
+              enctype="multipart/form-data">
 
-        <div class="card">
+            <div class="upload-box">
 
-            <h2>Prediction Result</h2>
+                <input type="file"
+                       name="csv_file"
+                       accept=".csv"
+                       required>
 
-            {% if prediction == 1 %}
+            </div>
 
-                <p class="high-risk">
-                    ⚠ Defective Module
-                </p>
+            <button type="submit"
+                    class="predict-btn">
 
-            {% elif prediction == 0 %}
+                Upload & Analyze Dataset
 
-                <p class="low-risk">
-                    ✅ Healthy Module
-                </p>
+            </button>
 
-            {% else %}
+        </form>
 
-                <p>--</p>
-
-            {% endif %}
-
-        </div>
-
-    </div>
-
-    <!-- DYNAMIC RISK FACTORS -->
-
-    {% if risk_factors %}
-
-    {% endif %}
-
-{% if prediction is defined and prediction is not none %}
-   <!-- Explainable AI Card -->
-
-<div class="explanation-card">
-
-    <h2> AI Explanation</h2>
-
-    <h3>
-        {% if prediction == 1 %}
-            ⚠ Defective Module Detected
-        {% else %}
-            ✅ Healthy Module
-        {% endif %}
-    </h3>
-
-    <p>
-        <strong>Risk Confidence:</strong>
-        {{ risk_score }}%
-    </p>
-
-    <hr>
-
-    <h3>Top Risk Drivers</h3>
-
-    <ul class="factor-list">
-        {% for feature, importance in top_features %}
-        <li>
-            <strong>{{ feature }}</strong>
-            ({{ importance }}%)
-        </li>
-        {% endfor %}
-    </ul>
-
-    <!-- Feature Importance Chart -->
-
-    <div class="chart-section">
-        <h3>Feature Importance Analysis</h3>
-
-        <img
-            src="{{ url_for('static', filename='feature_importance.png') }}"
-            alt="Feature Importance Chart"
-            class="importance-chart">
-    </div>
-
-    <h3> Recommended Actions</h3>
-
-    <ul class="action-list">
-        <li>✔ Perform detailed code review</li>
-        <li>✔ Increase unit test coverage</li>
-        <li>✔ Conduct static code analysis</li>
-        <li>✔ Prioritize regression testing</li>
-        <li>✔ Monitor high-complexity functions</li>
-    </ul>
-
-    <h3> Overall Assessment</h3>
-
-    <div class="assessment-box">
-
-        {% if risk_score >= 70 %}
-
-        <p>
-            This module exhibits elevated software complexity and
-            defect-prone characteristics. Additional testing,
-            code review, and quality assurance efforts are strongly
-            recommended before deployment.
-        </p>
-
-        {% elif risk_score >= 40 %}
-
-        <p>
-            This module shows moderate risk indicators.
-            Targeted testing and focused code review are
-            recommended to improve software reliability.
-        </p>
-
-        {% else %}
-
-        <p>
-            The software metrics indicate a stable and maintainable
-            module with a relatively low probability of defects.
-            Standard testing procedures should be sufficient.
-        </p>
-
-        {% endif %}
-
-    </div>
-
-</div>
-
-    <!-- RECENT PREDICTIONS -->
-
-    {% if history %}
-
-    <div class="history-section">
-
-        <div class="analytics-dashboard">
-
-    <div class="analytics-card">
-        <h3>Total Predictions</h3>
-        <p>{{ total_predictions }}</p>
-    </div>
-
-    <div class="analytics-card">
-        <h3>Healthy Modules</h3>
-        <p>{{ healthy_count }}</p>
-    </div>
-
-    <div class="analytics-card">
-        <h3>Defective Modules</h3>
-        <p>{{ defective_count }}</p>
-    </div>
-
-    <div class="analytics-card">
-        <h3>Average Risk</h3>
-        <p>{{ avg_risk }}%</p>
-    </div>
-
-</div>
-
-        <h2>Recent Predictions</h2>
-
-        <table>
-
-            <tr>
-                <th>Risk Score</th>
-                <th>Risk Level</th>
-                <th>Priority</th>
-                <th>Prediction</th>
-            </tr>
-
-            {% for row in history %}
-
-            <tr>
-
-                <td>{{ row[0] }}</td>
-                <td>{{ row[1] }}</td>
-                <td>{{ row[2] }}</td>
-                <td>{{ row[3] }}</td>
-
-            </tr>
-
-            {% endfor %}
-
-        </table>
-
-    </div>
-
-    {% endif %}
-
-       {% endif %}  
-    <!-- FOOTER -->
-
-    <footer>
-
-        <p>
-            IntelliCode © 2026 |
-            AI-Powered Software Defect Prediction Platform
-        </p>
-
-    </footer>
-
-</div>
-
-</body>
-</html>
+    </section>
 ```
