@@ -176,11 +176,10 @@ IntelliCode/
 
 ### Clone Repository
 
-```bash
+
 git clone https://github.com/YOUR_USERNAME/IntelliCode.git
 
 cd IntelliCode
-```
 
 ### Create Virtual Environment
 
@@ -241,6 +240,8 @@ http://127.0.0.1:5000
 ✅ Prediction History Tracking
 
 ✅ Recent Predictions Table
+
+✅  Basic Python File Metrics Extraction
 
 ---
 

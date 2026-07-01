@@ -71,57 +71,52 @@ if __name__ == "__main__":
     )
 
     print(metrics)
-
 def extract_radon_metrics(code):
 
+    # Calculate Cyclomatic Complexity
     complexities = cc_visit(code)
+
     if complexities:
-          avg_cc = sum(block.complexity for block in complexities) / len(complexities)
+        avg_cc = sum(block.complexity for block in complexities) / len(complexities)
     else:
-         avg_cc = 0
+        avg_cc = 0
+
+    # Calculate Halstead Metrics
     halstead = h_visit(code)
 
-    if complexities:
-
-        avg_complexity = sum(
-            block.complexity
-            for block in complexities
-        ) / len(complexities)
-
-    else:
-
-        avg_complexity = 0
-
     metrics = {
-    "cyclomatic_complexity": avg_cc,
 
-    "program_length": h.total.length,
+        # Complexity Metrics
+        "cyclomatic_complexity": round(avg_cc, 2),
 
-    "program_vocabulary": h.total.vocabulary,
+        # Halstead Metrics
+        "program_length": halstead.total.length,
+        "program_vocabulary": halstead.total.vocabulary,
+        "halstead_volume": round(halstead.total.volume, 2),
+        "difficulty": round(halstead.total.difficulty, 2),
+        "effort": round(halstead.total.effort, 2),
+        "estimated_bugs": round(halstead.total.bugs, 4),
+        "time_required": round(halstead.total.time, 2),
 
-    "halstead_volume": h.total.volume,
+        # Operator / Operand Metrics
+        "unique_operators": halstead.total.h1,
+        "unique_operands": halstead.total.h2,
+        "total_operators": halstead.total.N1,
+        "total_operands": halstead.total.N2,
 
-    "difficulty": h.total.difficulty,
+        # Derived Metrics
+        "program_level": round(
+            1 / halstead.total.difficulty,
+            4
+        ) if halstead.total.difficulty != 0 else 0,
 
-    "effort": h.total.effort,
+        "intelligence": round(
+            halstead.total.volume / halstead.total.difficulty,
+            2
+        ) if halstead.total.difficulty != 0 else 0
 
-    "estimated_bugs": h.total.bugs,
+    }
 
-    "time_required": h.total.time,
-
-    "unique_operators": h.total.h1,
-
-    "unique_operands": h.total.h2,
-
-    "total_operators": h.total.N1,
-
-    "total_operands": h.total.N2,
-
-    "program_level": h.total.level,
-
-    "intelligence": h.total.volume / h.total.difficulty if h.total.difficulty else 0
-}
-    
     return metrics
 if __name__ == "__main__":
 

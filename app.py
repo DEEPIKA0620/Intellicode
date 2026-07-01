@@ -385,6 +385,65 @@ def analyze_python():
     basic_metrics,
     radon_metrics
 )
+    feature_vector = [[
+
+    features["loc"],
+    features["vg"],
+    features["evg"],
+    features["ivg"],
+    features["n"],
+    features["v"],
+    features["l"],
+    features["d"],
+    features["i"],
+    features["e"],
+    features["b"],
+    features["t"],
+    features["locode"],
+    features["locomment"],
+    features["loblank"],
+    features["loccodecomment"],
+    features["uniqop"],
+    features["uniqopnd"],
+    features["totalop"],
+    features["totalopnd"],
+    features["branchcount"]
+
+]]
+    prediction = rf.predict(feature_vector)[0]
+
+    probability = rf.predict_proba(feature_vector)[0][1]
+
+    risk_score = round(probability * 100, 2)
+
+    if risk_score <= 40:
+       risk_level = "Low"
+       priority = "Priority 3"
+
+    elif risk_score <= 60:
+         risk_level = "Medium"
+         priority = "Priority 2"
+
+    else:
+        risk_level = "High"
+        priority = "Priority 1"
+
+    prediction_text = (
+         "Defective Module"
+         if prediction == 1
+         else "Healthy Module"
+)
+    print("\n========== PYTHON FILE ANALYSIS ==========")
+
+    print("Prediction :", prediction_text)
+
+    print("Risk Score :", risk_score)
+
+    print("Risk Level :", risk_level)
+
+    print("Priority :", priority)
+
+    print("=========================================\n")
 
     print("Basic Metrics:")
     print(basic_metrics)
@@ -394,6 +453,6 @@ def analyze_python():
 
     print("\nMapped Features:")
     print(features)
-    return "Metrics extracted successfully!"
+    return prediction_text
 if __name__ == "__main__":
     app.run(debug=True)
