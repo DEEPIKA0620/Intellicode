@@ -6,6 +6,8 @@ import csv
 import os
 import matplotlib.pyplot as plt
 import pandas as pd
+from utils.metrics_extractor import extract_basic_metrics, extract_radon_metrics
+from utils.feature_mapper import map_features
 
 app = Flask(__name__)
 
@@ -360,5 +362,38 @@ def download_report():
         "reports/bulk_predictions.csv",
         as_attachment=True
     )
+@app.route("/analyze_python", methods=["POST"])
+def analyze_python():
+
+    file = request.files["python_file"]
+
+    if file.filename == "":
+        return "No file selected."
+
+    upload_path = os.path.join("uploads", file.filename)
+
+    file.save(upload_path)
+
+    basic_metrics = extract_basic_metrics(upload_path)
+
+    with open(upload_path, "r", encoding="utf-8") as file:
+      code = file.read()
+
+    radon_metrics = extract_radon_metrics(code)
+
+    features = map_features(
+    basic_metrics,
+    radon_metrics
+)
+
+    print("Basic Metrics:")
+    print(basic_metrics)
+
+    print("\nRadon Metrics:")
+    print(radon_metrics)
+
+    print("\nMapped Features:")
+    print(features)
+    return "Metrics extracted successfully!"
 if __name__ == "__main__":
     app.run(debug=True)
