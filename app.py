@@ -8,6 +8,8 @@ import matplotlib.pyplot as plt
 import pandas as pd
 from utils.metrics_extractor import extract_basic_metrics, extract_radon_metrics
 from utils.feature_mapper import map_features
+UPLOAD_FOLDER = r"C:\Temp\IntelliCodeUploads"
+os.makedirs(UPLOAD_FOLDER, exist_ok=True)
 
 app = Flask(__name__)
 
@@ -121,6 +123,10 @@ def home():
         healthy_count=healthy_count,
         defective_count=defective_count,
         avg_risk=avg_risk,
+        # NEW VARIABLES
+        extracted_metrics=None,
+        uploaded_filename=None,
+        analysis_mode=None
 )
 
 @app.route('/predict', methods=['POST'])
@@ -370,14 +376,14 @@ def analyze_python():
     if file.filename == "":
         return "No file selected."
 
-    upload_path = os.path.join("uploads", file.filename)
+    upload_path = os.path.join(UPLOAD_FOLDER, file.filename)
 
     file.save(upload_path)
 
     basic_metrics = extract_basic_metrics(upload_path)
 
-    with open(upload_path, "r", encoding="utf-8") as file:
-      code = file.read()
+    with open(upload_path, "r", encoding="utf-8") as f:
+      code = f.read()
 
     radon_metrics = extract_radon_metrics(code)
 
@@ -453,6 +459,28 @@ def analyze_python():
 
     print("\nMapped Features:")
     print(features)
-    return prediction_text
+
+    print("\nFeature Vector:")
+    print(feature_vector)
+
+    return render_template(
+
+    "index.html",
+
+    prediction=int(prediction),
+
+    risk_score=risk_score,
+
+    risk_level=risk_level,
+
+    priority=priority,
+
+    extracted_metrics=features,
+
+    uploaded_filename=file.filename,
+
+    analysis_mode="python"
+
+)
 if __name__ == "__main__":
     app.run(debug=True)

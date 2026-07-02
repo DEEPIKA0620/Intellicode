@@ -205,6 +205,37 @@
     {% endif %}
 
 {% if prediction is defined and prediction is not none %}
+
+{% if analysis_mode == "python" %}
+
+<div class="python-analysis-card">
+
+    <h2>📄 Python File Analysis</h2>
+
+    <div class="analysis-grid">
+
+        <div class="analysis-item">
+
+            <h4>Uploaded File</h4>
+
+            <p>{{ uploaded_filename }}</p>
+
+        </div>
+
+        <div class="analysis-item">
+
+            <h4>Status</h4>
+
+            <p style="color:green;">✔ Successfully Analyzed</p>
+
+        </div>
+
+    </div>
+
+</div>
+
+{% endif %}
+
    <!-- Explainable AI Card -->
 
 <div class="explanation-card">

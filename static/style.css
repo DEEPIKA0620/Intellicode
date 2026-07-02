@@ -406,3 +406,61 @@ th{
 .results-table tr:nth-child(even){
     background:#f8f9fa;
 }
+
+.python-analysis-card{
+
+    background:#fff;
+
+    border-radius:15px;
+
+    padding:25px;
+
+    margin:30px auto;
+
+    width:90%;
+
+    box-shadow:0 5px 20px rgba(0,0,0,.1);
+
+}
+
+.python-analysis-card h2{
+
+    color:#1e3a8a;
+
+    margin-bottom:20px;
+
+}
+
+.analysis-grid{
+
+    display:flex;
+
+    gap:30px;
+
+}
+
+.analysis-item{
+
+    flex:1;
+
+    background:#f8f9fa;
+
+    padding:20px;
+
+    border-radius:10px;
+
+}
+
+.analysis-item h4{
+
+    color:#555;
+
+}
+
+.analysis-item p{
+
+    font-size:20px;
+
+    font-weight:bold;
+
+}
