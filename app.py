@@ -11,6 +11,30 @@ from utils.feature_mapper import map_features
 UPLOAD_FOLDER = r"C:\Temp\IntelliCodeUploads"
 os.makedirs(UPLOAD_FOLDER, exist_ok=True)
 
+METRIC_NAMES = {
+    "loc": "Lines of Code",
+    "locode": "Logical Lines of Code",
+    "locomment": "Comment Lines",
+    "loblank": "Blank Lines",
+    "loccodecomment": "LOC + Comments",
+    "vg": "Cyclomatic Complexity",
+    "evg": "Essential Complexity",
+    "ivg": "Design Complexity",
+    "n": "Program Length",
+    "v": "Halstead Volume",
+    "l": "Program Level",
+    "d": "Difficulty",
+    "i": "Intelligence",
+    "e": "Effort",
+    "b": "Estimated Bugs",
+    "t": "Time Required",
+    "uniqop": "Unique Operators",
+    "uniqopnd": "Unique Operands",
+    "totalop": "Total Operators",
+    "totalopnd": "Total Operands",
+    "branchcount": "Branch Count"
+}
+
 app = Flask(__name__)
 
 # Load trained model
@@ -126,7 +150,8 @@ def home():
         # NEW VARIABLES
         extracted_metrics=None,
         uploaded_filename=None,
-        analysis_mode=None
+        analysis_mode=None,
+        all_metrics=None,
 )
 
 @app.route('/predict', methods=['POST'])
@@ -463,6 +488,11 @@ def analyze_python():
     print("\nFeature Vector:")
     print(feature_vector)
 
+    display_metrics = {}
+
+    for key, value in features.items():
+        display_metrics[METRIC_NAMES.get(key, key)] = value
+
     return render_template(
 
     "index.html",
@@ -476,6 +506,8 @@ def analyze_python():
     priority=priority,
 
     extracted_metrics=features,
+
+    all_metrics=display_metrics,
 
     uploaded_filename=file.filename,
 

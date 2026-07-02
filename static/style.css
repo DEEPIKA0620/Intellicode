@@ -464,3 +464,67 @@ th{
     font-weight:bold;
 
 }
+
+.metrics-card{
+
+    width:90%;
+
+    margin:30px auto;
+
+    background:#fff;
+
+    border-radius:15px;
+
+    padding:25px;
+
+    box-shadow:0 5px 20px rgba(0,0,0,.1);
+
+}
+
+.metrics-card h2{
+
+    color:#1e3a8a;
+
+    margin-bottom:20px;
+
+}
+
+.metrics-table{
+
+    width:100%;
+
+    border-collapse:collapse;
+
+}
+
+.metrics-table th{
+
+    background:#1e88e5;
+
+    color:white;
+
+    padding:12px;
+
+    text-align:left;
+
+}
+
+.metrics-table td{
+
+    padding:12px;
+
+    border-bottom:1px solid #ddd;
+
+}
+
+.metrics-table tr:nth-child(even){
+
+    background:#f8f9fa;
+
+}
+
+.metrics-table tr:hover{
+
+    background:#eef6ff;
+
+}
