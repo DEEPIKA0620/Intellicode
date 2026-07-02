@@ -10,6 +10,7 @@ from utils.metrics_extractor import extract_basic_metrics, extract_radon_metrics
 from utils.feature_mapper import map_features
 UPLOAD_FOLDER = r"C:\Temp\IntelliCodeUploads"
 os.makedirs(UPLOAD_FOLDER, exist_ok=True)
+from database import save_prediction
 
 METRIC_NAMES = {
     "loc": "Lines of Code",
@@ -218,6 +219,19 @@ float(request.form["branchcount"])
         priority = "Priority 1"
 
     prediction_text = "Defective Module" if prediction == 1 else "Healthy Module"
+
+    # maintainability_index may not be available for manual input
+    maintainability_index = None
+
+    save_prediction(
+        "Manual Input",
+        prediction_text,
+        probability,
+        risk_level,
+        float(request.form["loc"]),
+        float(request.form["vg"]),
+        maintainability_index
+    )
 
     top_features = [
         ("LOC", 13.2),
@@ -463,6 +477,15 @@ def analyze_python():
          "Defective Module"
          if prediction == 1
          else "Healthy Module"
+)
+    save_prediction(
+    file.filename,
+    prediction_text,
+    probability,
+    risk_level,
+    features["loc"],
+    features["vg"],
+    radon_metrics["maintainability_index"]
 )
     print("\n========== PYTHON FILE ANALYSIS ==========")
 

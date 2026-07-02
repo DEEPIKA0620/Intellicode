@@ -2,7 +2,7 @@ import ast
 import os
 from radon.raw import analyze
 from radon.complexity import cc_visit
-from radon.metrics import h_visit
+from radon.metrics import h_visit, mi_visit
 
 def extract_basic_metrics(file_path):
     """
@@ -83,6 +83,7 @@ def extract_radon_metrics(code):
 
     # Calculate Halstead Metrics
     halstead = h_visit(code)
+    mi = round(mi_visit(code, multi=True), 2)
 
     metrics = {
 
@@ -113,7 +114,9 @@ def extract_radon_metrics(code):
         "intelligence": round(
             halstead.total.volume / halstead.total.difficulty,
             2
-        ) if halstead.total.difficulty != 0 else 0
+        ) if halstead.total.difficulty != 0 else 0,
+        
+        "maintainability_index": mi
 
     }
 
