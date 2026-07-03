@@ -41,6 +41,24 @@ def save_prediction(filename, prediction, probability, risk_level,
     cursor.close()
     connection.close()
 
+def get_prediction_history():
+    connection = connect_db()
+    cursor = connection.cursor(dictionary=True)
+
+    query = """
+    SELECT *
+    FROM predictions
+    ORDER BY timestamp DESC
+    """
+
+    cursor.execute(query)
+    records = cursor.fetchall()
+
+    cursor.close()
+    connection.close()
+
+    return records
+
 if __name__ == "__main__":
     try:
         save_prediction(

@@ -10,7 +10,7 @@ from utils.metrics_extractor import extract_basic_metrics, extract_radon_metrics
 from utils.feature_mapper import map_features
 UPLOAD_FOLDER = r"C:\Temp\IntelliCodeUploads"
 os.makedirs(UPLOAD_FOLDER, exist_ok=True)
-from database import save_prediction
+from database import save_prediction, get_prediction_history
 
 METRIC_NAMES = {
     "loc": "Lines of Code",
@@ -40,8 +40,10 @@ app = Flask(__name__)
 
 # Load trained model
 rf = joblib.load("model/defect_model.pkl")
-
 def load_prediction_history():
+    history = get_prediction_history()
+    if history:
+        return history
 
     file_path = "reports/prediction_history.csv"
 
@@ -49,11 +51,8 @@ def load_prediction_history():
         return []
 
     with open(file_path, "r") as file:
-
         reader = csv.reader(file)
-
         next(reader, None)
-
         rows = list(reader)
 
     return rows[-5:]
