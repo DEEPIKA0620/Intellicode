@@ -325,7 +325,25 @@ def upload_csv():
         else "Healthy Module"
         for p in predictions
     ]
+    for index, row in df.iterrows():
 
+      if row["Risk Score"] <= 40:
+         risk_level = "Low"
+      elif row["Risk Score"] <= 60:
+         risk_level = "Medium"
+      else:
+         risk_level = "High"
+
+      save_prediction(
+          f"Module {int(row['Module ID'])}",
+          row["Prediction"],
+          row["Risk Score"] / 100,
+          risk_level,
+          row["loc"],
+          row["v(g)"],
+          None
+    )
+    
     top_risk_modules = (
     df.sort_values(
         by="Risk Score",
