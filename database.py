@@ -48,7 +48,8 @@ def get_prediction_history():
     query = """
     SELECT *
     FROM predictions
-    ORDER BY timestamp DESC
+    ORDER BY id DESC
+    LIMIT 5
     """
 
     cursor.execute(query)
