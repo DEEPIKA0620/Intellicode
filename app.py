@@ -10,7 +10,11 @@ from utils.metrics_extractor import extract_basic_metrics, extract_radon_metrics
 from utils.feature_mapper import map_features
 UPLOAD_FOLDER = r"C:\Temp\IntelliCodeUploads"
 os.makedirs(UPLOAD_FOLDER, exist_ok=True)
-from database import save_prediction, get_prediction_history
+from database import (
+    save_prediction,
+    get_prediction_history,
+    get_dashboard_stats
+)
 
 METRIC_NAMES = {
     "loc": "Lines of Code",
@@ -41,21 +45,7 @@ app = Flask(__name__)
 # Load trained model
 rf = joblib.load("model/defect_model.pkl")
 def load_prediction_history():
-    history = get_prediction_history()
-    if history:
-        return history
-
-    file_path = "reports/prediction_history.csv"
-
-    if not os.path.exists(file_path):
-        return []
-
-    with open(file_path, "r") as file:
-        reader = csv.reader(file)
-        next(reader, None)
-        rows = list(reader)
-
-    return rows[-5:]
+    return get_prediction_history()
 
 def generate_feature_chart():
 
@@ -86,49 +76,6 @@ def generate_feature_chart():
     plt.savefig("static/feature_importance.png")
 
     plt.close()
-
-def get_dashboard_stats():
-
-    file_path = "reports/prediction_history.csv"
-
-    if not os.path.exists(file_path):
-        return 0,0,0,0
-
-    with open(file_path,"r") as file:
-
-        reader = csv.DictReader(file)
-
-        rows = list(reader)
-
-    total_predictions = len(rows)
-
-    healthy_count = sum(
-        1 for row in rows
-        if row["Prediction"] == "Healthy Module"
-    )
-
-    defective_count = sum(
-        1 for row in rows
-        if row["Prediction"] == "Defective Module"
-    )
-
-    if total_predictions > 0:
-
-        avg_risk = round(
-            sum(float(row["Risk Score"]) for row in rows)
-            / total_predictions,
-            2
-        )
-
-    else:
-        avg_risk = 0
-
-    return (
-        total_predictions,
-        healthy_count,
-        defective_count,
-        avg_risk
-    )    
 
 @app.route('/')
 def home():

@@ -59,6 +59,46 @@ def get_prediction_history():
 
     return records
 
+def get_dashboard_stats():
+
+    connection = connect_db()
+    cursor = connection.cursor()
+
+    cursor.execute("SELECT COUNT(*) FROM predictions")
+    total_predictions = cursor.fetchone()[0]
+
+    cursor.execute("""
+        SELECT COUNT(*)
+        FROM predictions
+        WHERE prediction = 'Healthy Module'
+    """)
+    healthy_count = cursor.fetchone()[0]
+
+    cursor.execute("""
+        SELECT COUNT(*)
+        FROM predictions
+        WHERE prediction = 'Defective Module'
+    """)
+    defective_count = cursor.fetchone()[0]
+
+    cursor.execute("""
+        SELECT AVG(probability)
+        FROM predictions
+    """)
+    avg = cursor.fetchone()[0]
+
+    avg_risk = round((avg or 0) * 100, 2)
+
+    cursor.close()
+    connection.close()
+
+    return (
+        total_predictions,
+        healthy_count,
+        defective_count,
+        avg_risk
+    )
+
 if __name__ == "__main__":
     try:
         save_prediction(
