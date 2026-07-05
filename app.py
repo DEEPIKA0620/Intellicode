@@ -15,6 +15,7 @@ from database import (
     get_prediction_history,
     get_dashboard_stats
 )
+from utils.pdf_report import generate_pdf_report
 
 METRIC_NAMES = {
     "loc": "Lines of Code",
@@ -179,6 +180,16 @@ float(request.form["branchcount"])
         maintainability_index
     )
 
+    pdf_path = generate_pdf_report(
+    filename="Manual Input",
+    prediction=prediction_text,
+    risk_score=risk_score,
+    risk_level=risk_level,
+    loc=float(request.form["loc"]),
+    complexity=float(request.form["vg"]),
+    mi=None
+)
+
     top_features = [
         ("LOC", 13.2),
         ("Logical LOC", 5.65),
@@ -207,16 +218,7 @@ float(request.form["branchcount"])
         Standard testing procedures should be sufficient.
         """
 
-    # Save prediction to history
-    file_path = "reports/prediction_history.csv"
-    os.makedirs("reports", exist_ok=True)
-    file_exists = os.path.isfile(file_path)
-    with open(file_path, "a", newline="") as file:
-        writer = csv.writer(file)
-        if not file_exists:
-            writer.writerow(["Risk Score", "Risk Level", "Priority", "Prediction"])
-        writer.writerow([risk_score, risk_level, priority, prediction_text])
-
+    
     history = load_prediction_history()
     total_predictions, healthy_count, defective_count, avg_risk = get_dashboard_stats()
     return render_template(
@@ -233,7 +235,8 @@ float(request.form["branchcount"])
         total_predictions=total_predictions,
         healthy_count=healthy_count,
         defective_count=defective_count,
-        avg_risk=avg_risk
+        avg_risk=avg_risk,
+        pdf_report=pdf_path
     )
 
 @app.route('/upload_csv', methods=['POST'])
@@ -365,8 +368,8 @@ def upload_csv():
         top_risk_modules=top_risk_modules
     )
 
-@app.route('/download_report')
-def download_report():
+@app.route('/download_csv')
+def download_csv():
     return send_file(
         "reports/bulk_predictions.csv",
         as_attachment=True
@@ -442,15 +445,29 @@ def analyze_python():
          if prediction == 1
          else "Healthy Module"
 )
+
+    uploaded_filename = file.filename
+
     save_prediction(
-    file.filename,
-    prediction_text,
-    probability,
-    risk_level,
-    features["loc"],
-    features["vg"],
-    radon_metrics["maintainability_index"]
-)
+        file.filename,
+        prediction_text,
+        probability,
+        risk_level,
+        features["loc"],
+        features["vg"],
+        radon_metrics["maintainability_index"]
+    )
+
+    pdf_path = generate_pdf_report(
+        filename=uploaded_filename,
+        prediction=prediction_text,
+        risk_score=risk_score,
+        risk_level=risk_level,
+        loc=basic_metrics.get("loc", features["loc"]),
+        complexity=basic_metrics.get("v(g)", features["vg"]),
+        mi=radon_metrics.get("maintainability_index")
+    )
+
     print("\n========== PYTHON FILE ANALYSIS ==========")
 
     print("Prediction :", prediction_text)
@@ -498,8 +515,20 @@ def analyze_python():
 
     uploaded_filename=file.filename,
 
-    analysis_mode="python"
+    analysis_mode="python",
+
+    pdf_report=pdf_path
 
 )
+
+@app.route("/download_report")
+def download_report():
+
+    return send_file(
+        "reports/IntelliCode_Report.pdf",
+        as_attachment=True,
+        download_name="IntelliCode_Report.pdf"
+    )
+
 if __name__ == "__main__":
     app.run(debug=True)

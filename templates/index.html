@@ -348,6 +348,20 @@
 </div>
 {% endif %}
 
+{% if pdf_report %}
+
+<div class="download-section">
+    <a href="{{ url_for('download_report') }}"
+   class="download-btn">
+    📄 Download AI Report
+    </a>
+
+</div>
+
+{% endif %}
+
+
+
     <!-- RECENT PREDICTIONS -->
 
     {% if history %}
