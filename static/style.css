@@ -552,3 +552,42 @@ th{
     transform: scale(1.1);
     background: #0056b3;
 }
+
+/* ==========================
+   JavaScript Enhancements
+========================== */
+
+.selected-file{
+    margin-top:10px;
+    color:#0b7dda;
+    font-weight:bold;
+}
+
+#topBtn{
+
+    position:fixed;
+    bottom:25px;
+    right:25px;
+
+    width:50px;
+    height:50px;
+
+    border:none;
+    border-radius:50%;
+
+    font-size:22px;
+    cursor:pointer;
+
+    background:#1f6feb;
+    color:white;
+
+    box-shadow:0 5px 15px rgba(0,0,0,.3);
+
+    transition:.3s;
+}
+
+#topBtn:hover{
+
+    transform:scale(1.1);
+
+}
