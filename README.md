@@ -205,44 +205,6 @@ Open:
 http://127.0.0.1:5000
 ```
 
----
-
-## Screenshots
-
-Add screenshots inside a `screenshots` folder.
-
-```
-screenshots/
-│
-├── home.png
-├── manual_prediction.png
-├── python_analysis.png
-├── bulk_prediction.png
-├── dashboard.png
-└── pdf_report.png
-```
-
-Example:
-
-```markdown
-![Home](screenshots/home.png)
-```
-
----
-
-## Future Enhancements
-
-- User Authentication
-- Cloud Deployment
-- REST API
-- Docker Support
-- CI/CD Integration
-- Multiple Machine Learning Models
-- Real-time Monitoring Dashboard
-- Email Report Generation
-
----
-
 ## Learning Outcomes
 
 This project demonstrates practical implementation of:
