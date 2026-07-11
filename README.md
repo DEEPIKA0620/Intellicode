@@ -1,106 +1,87 @@
-IntelliCode
-AI-Powered Software Defect Prediction Platform
+# IntelliCode
 
-IntelliCode is an AI-powered web application that predicts software defects using software metrics extracted from source code or CSV datasets. The platform combines Machine Learning, Static Code Analysis, Explainable AI, MySQL, and PDF reporting to help developers identify defect-prone modules before deployment.
+> **AI-Powered Software Defect Prediction Platform**
 
-Features
-Manual Software Metrics Prediction
-Predict software defects by entering software metrics manually.
-Displays:
-Prediction result
-Risk Score
-Risk Level
-AI Recommendations
-Explainable AI insights
-Python Source Code Analysis
+IntelliCode is an AI-powered web application that predicts software defects using Machine Learning and software metrics. It enables developers to analyze software quality through manual metric input, Python source code analysis, and bulk CSV prediction while providing Explainable AI insights, dashboard analytics, MySQL storage, and professional PDF reports.
 
-Upload a Python (.py) file and IntelliCode automatically:
+---
 
-Extracts software metrics
-Computes Maintainability Index
-Calculates Cyclomatic Complexity
-Maps extracted metrics to the machine learning feature set
-Predicts software defects
-Generates a professional PDF report
-Bulk CSV Prediction
+## Features
 
-Upload software metric datasets in CSV format to:
+### Manual Software Metrics Prediction
+- Predict software defects using software metrics.
+- Displays:
+  - Prediction Result
+  - Risk Score
+  - Risk Level
+  - Priority Level
+  - Explainable AI Assessment
 
-Predict defects for hundreds or thousands of modules
-Generate module-wise predictions
-View Top High-Risk Modules
-Visualize module distribution using charts
-Download a professional Bulk Analysis Report
-Explainable AI
+### Python Source Code Analysis
+- Upload Python (.py) files
+- Automatic software metric extraction
+- Cyclomatic Complexity calculation
+- Halstead Metrics calculation
+- Maintainability Index calculation
+- AI-based defect prediction
+- Professional PDF report generation
 
-The platform provides transparent predictions through:
+### Bulk CSV Prediction
+- Upload PROMISE dataset or custom software metric datasets
+- Predict defects for multiple modules
+- Summary dashboard
+- Module distribution visualization
+- Top high-risk module identification
+- Download bulk analysis report
 
-Risk Score
-Risk Level
-Feature Importance
-AI Assessment
-Testing Recommendations
-Dashboard Analytics
-Total Predictions
-Healthy Modules
-Defective Modules
-Average Risk Score
-Recent Predictions
+### Explainable AI
+- Feature Importance
+- Risk Assessment
+- Risk Drivers
+- AI Recommendations
 
-All prediction history is stored in MySQL.
+### Dashboard Analytics
+- Total Predictions
+- Healthy Modules
+- Defective Modules
+- Average Risk Score
+- Recent Prediction History
 
-PDF Report Generation
+### Database Integration
+- MySQL storage
+- Prediction history
+- Dashboard statistics
 
-Supports:
+### Report Generation
+- Individual Software Analysis Report (PDF)
+- Bulk Analysis Report (PDF)
 
-Individual Software Analysis Report
-Bulk Prediction Report
+---
 
-Reports include:
+## Tech Stack
 
-Prediction Summary
-Software Metrics
-AI Assessment
-Recommendations
-Risk Analysis
+| Category | Technologies |
+|----------|--------------|
+| Frontend | HTML5, CSS3, JavaScript |
+| Backend | Flask, Python |
+| Machine Learning | Scikit-learn, Random Forest |
+| Static Code Analysis | Radon |
+| Database | MySQL |
+| Data Processing | Pandas, NumPy |
+| Visualization | Matplotlib |
+| PDF Generation | ReportLab |
 
-Tech Stack
-Frontend
-HTML5
-CSS3
-JavaScript
+---
 
-Backend
-Flask
-Python
+## Project Structure
 
-Machine Learning
-Scikit-learn
-Random Forest Classifier
-Static Code Analysis
-Radon
-
-Data Processing
-Pandas
-NumPy
-
-Visualization
-Matplotlib
-
-Database
-MySQL
-
-PDF Generation
-ReportLab
-
-Project Structure
+```text
 IntelliCode/
 │
 ├── app.py
 ├── database.py
-├── model/
-│   ├── random_forest_model.pkl
-│   └── feature_importance.png
+├── model.pkl
+├── requirements.txt
 │
 ├── utils/
 │   ├── metrics_extractor.py
@@ -121,88 +102,173 @@ IntelliCode/
 │
 ├── uploads/
 ├── reports/
-├── dataset/
-└── requirements.txt
-System Workflow
-                User
-                  │
-                  ▼
-      Manual / Python / CSV Upload
-                  │
-                  ▼
-      Software Metrics Extraction
-                  │
-                  ▼
+└── dataset/
+```
+
+---
+
+## System Workflow
+
+```text
+             User
+               │
+               ▼
+   Manual Entry / Python File / CSV Upload
+               │
+               ▼
+      Software Metric Extraction
+               │
+               ▼
          Feature Mapping
-                  │
-                  ▼
+               │
+               ▼
      Random Forest Prediction
-                  │
-                  ▼
-      Explainable AI Analysis
-                  │
-      ┌───────────┴────────────┐
-      ▼                        ▼
-   MySQL Storage         PDF Report
-      │                        │
-      └───────────┬────────────┘
-                  ▼
-          Interactive Dashboard
-Installation
-Clone Repository
+               │
+               ▼
+        Explainable AI Analysis
+               │
+       ┌───────┴────────┐
+       ▼                ▼
+    MySQL          PDF Report
+       │
+       ▼
+ Interactive Dashboard
+```
+
+---
+
+## Installation
+
+### Clone the Repository
+
+```bash
 git clone https://github.com/yourusername/IntelliCode.git
+```
+
+```bash
 cd IntelliCode
-Create Virtual Environment
+```
+
+---
+
+### Create Virtual Environment
+
+```bash
 python -m venv venv
+```
+
+Activate the environment
 
 Windows
 
+```bash
 venv\Scripts\activate
+```
 
 Linux / macOS
 
+```bash
 source venv/bin/activate
-Install Dependencies
+```
+
+---
+
+### Install Dependencies
+
+```bash
 pip install -r requirements.txt
-Configure MySQL
+```
+
+---
+
+### Configure MySQL
 
 Create a database named:
 
+```sql
 CREATE DATABASE intellicode;
+```
 
-Create the predictions table.
+Import the required tables.
 
-(You can include your SQL schema here or in a separate .sql file.)
+---
 
-Run the Application
+### Run the Application
+
+```bash
 python app.py
+```
 
-Visit:
+Open:
 
+```
 http://127.0.0.1:5000
+```
 
+---
 
+## Screenshots
 
+Add screenshots inside a `screenshots` folder.
+
+```
+screenshots/
+│
+├── home.png
+├── manual_prediction.png
+├── python_analysis.png
+├── bulk_prediction.png
+├── dashboard.png
+└── pdf_report.png
+```
+
+Example:
+
+```markdown
+![Home](screenshots/home.png)
+```
+
+---
+
+## Future Enhancements
+
+- User Authentication
+- Cloud Deployment
+- REST API
+- Docker Support
+- CI/CD Integration
+- Multiple Machine Learning Models
+- Real-time Monitoring Dashboard
+- Email Report Generation
+
+---
+
+## Learning Outcomes
 
 This project demonstrates practical implementation of:
 
-Machine Learning for Software Engineering
-Static Code Analysis
-Software Quality Prediction
-Explainable AI
-Flask Web Development
-MySQL Database Integration
-PDF Report Generation
-Data Visualization
-Full-Stack AI Application Development
-Author
+- Machine Learning
+- Software Defect Prediction
+- Static Code Analysis
+- Explainable AI
+- Flask Web Development
+- MySQL Integration
+- Report Generation
+- Data Visualization
+- Full-Stack AI Application Development
 
-Deepika B R
+---
+
+## Author
+
+**Deepika B R**
 
 B.Tech Information Technology
 
 Agni College of Technology
 
-License
+---
 
-This project is developed for educational and research purposes.
+## License
+
+This project is intended for educational and research purposes.
