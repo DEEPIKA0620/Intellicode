@@ -16,7 +16,7 @@ from database import (
     get_dashboard_stats
 )
 from utils.pdf_report import generate_pdf_report
-from bulk_pdf_report import generate_bulk_pdf_report
+from utils.bulk_pdf_report import generate_bulk_pdf_report
 
 METRIC_NAMES = {
     "loc": "Lines of Code",

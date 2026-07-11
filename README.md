@@ -1,329 +1,208 @@
-# 🚀 IntelliCode – AI-Powered Software Defect Prediction & Code Quality Intelligence Platform
+IntelliCode
+AI-Powered Software Defect Prediction Platform
 
-## 📌 Overview
+IntelliCode is an AI-powered web application that predicts software defects using software metrics extracted from source code or CSV datasets. The platform combines Machine Learning, Static Code Analysis, Explainable AI, MySQL, and PDF reporting to help developers identify defect-prone modules before deployment.
 
-IntelliCode is an AI-powered Software Defect Prediction and Code Quality Intelligence Platform designed to help developers identify defect-prone software modules before deployment.
-
-Using Machine Learning trained on the NASA PROMISE JM1 dataset, IntelliCode analyzes software metrics and predicts whether a software module is likely to contain defects. The platform also provides risk scoring, testing priorities, prediction history tracking, and Explainable AI insights to assist developers in making informed software quality decisions.
-
----
-
-## 🎯 Project Objectives
-
-* Predict software defects using Machine Learning.
-* Identify high-risk software modules early.
-* Improve software testing efficiency.
-* Provide explainable AI-based decision support.
-* Assist developers and QA teams in prioritizing testing efforts.
-
----
-
-## ✨ Features
-
-### 🔍 Software Defect Prediction
-
-Predicts whether a software module is:
-
-* ✅ Healthy Module
-* ⚠️ Defective Module
-
-using software quality metrics.
-
----
-
-### 📊 Risk Assessment Dashboard
-
+Features
+Manual Software Metrics Prediction
+Predict software defects by entering software metrics manually.
 Displays:
+Prediction result
+Risk Score
+Risk Level
+AI Recommendations
+Explainable AI insights
+Python Source Code Analysis
 
-* Risk Score (%)
-* Risk Level (Low / Medium / High)
-* Testing Priority
-* Prediction Result
+Upload a Python (.py) file and IntelliCode automatically:
 
----
+Extracts software metrics
+Computes Maintainability Index
+Calculates Cyclomatic Complexity
+Maps extracted metrics to the machine learning feature set
+Predicts software defects
+Generates a professional PDF report
+Bulk CSV Prediction
 
-### 🤖 Explainable AI
+Upload software metric datasets in CSV format to:
 
-Provides transparent explanations for predictions using Random Forest Feature Importance.
+Predict defects for hundreds or thousands of modules
+Generate module-wise predictions
+View Top High-Risk Modules
+Visualize module distribution using charts
+Download a professional Bulk Analysis Report
+Explainable AI
 
-Example:
+The platform provides transparent predictions through:
 
-* LOC
-* Logical LOC
-* Halstead Volume
-* Intelligence
-* Time Estimate
+Risk Score
+Risk Level
+Feature Importance
+AI Assessment
+Testing Recommendations
+Dashboard Analytics
+Total Predictions
+Healthy Modules
+Defective Modules
+Average Risk Score
+Recent Predictions
 
-The system explains why the prediction was generated and highlights key risk drivers.
+All prediction history is stored in MySQL.
 
----
+PDF Report Generation
 
-### 📋 AI Risk Assessment
+Supports:
 
-Generates professional software quality insights including:
+Individual Software Analysis Report
+Bulk Prediction Report
 
-* Primary Risk Drivers
-* Recommended Actions
-* Overall Assessment
+Reports include:
 
-This helps developers understand and mitigate potential software risks.
+Prediction Summary
+Software Metrics
+AI Assessment
+Recommendations
+Risk Analysis
 
----
+Tech Stack
+Frontend
+HTML5
+CSS3
+JavaScript
 
-### 📈 Prediction History Tracking
+Backend
+Flask
+Python
 
-Stores predictions in CSV format and displays:
-
-* Risk Score
-* Risk Level
-* Testing Priority
-* Prediction Result
-
-allowing users to review recent analyses.
-
----
-
-## 🧠 Machine Learning Model
-
-### Algorithm Used
-
+Machine Learning
+Scikit-learn
 Random Forest Classifier
+Static Code Analysis
+Radon
 
-### Why Random Forest?
+Data Processing
+Pandas
+NumPy
 
-* High accuracy
-* Handles complex feature interactions
-* Robust against overfitting
-* Provides feature importance for Explainable AI
+Visualization
+Matplotlib
 
----
+Database
+MySQL
 
-## 📂 Dataset
+PDF Generation
+ReportLab
 
-### NASA PROMISE JM1 Dataset
-
-The model is trained using the NASA JM1 Software Defect Dataset containing software quality metrics such as:
-
-* LOC
-* Cyclomatic Complexity
-* Essential Complexity
-* Design Complexity
-* Halstead Metrics
-* Branch Count
-* Program Length
-* Development Effort
-
-and many other software engineering measurements.
-
----
-
-## 🛠️ Technology Stack
-
-### Backend
-
-* Python
-* Flask
-
-### Machine Learning
-
-* Scikit-Learn
-* NumPy
-* Pandas
-* Joblib
-
-### Frontend
-
-* HTML5
-* CSS3
-* Jinja2 Templates
-
-### Version Control
-
-* Git
-* GitHub
-
----
-
-## 📁 Project Structure
-
-```text
+Project Structure
 IntelliCode/
 │
 ├── app.py
-│
+├── database.py
 ├── model/
-│   └── defect_model.pkl
+│   ├── random_forest_model.pkl
+│   └── feature_importance.png
+│
+├── utils/
+│   ├── metrics_extractor.py
+│   ├── feature_mapper.py
+│   ├── pdf_report.py
+│   ├── bulk_pdf_report.py
+│   └── ...
 │
 ├── templates/
-│   └── index.html
+│   ├── index.html
+│   └── bulk_results.html
 │
 ├── static/
-│   └── style.css
+│   ├── style.css
+│   ├── script.js
+│   ├── feature_importance.png
+│   └── bulk_pie_chart.png
 │
+├── uploads/
 ├── reports/
-│   └── prediction_history.csv
-│
-├── notebooks/
-│   └── model_training.ipynb
-│
 ├── dataset/
-│   └── jm1.csv
-│
-└── README.md
-```
-
-## ⚙️ Installation
-
-### Clone Repository
-
-
-git clone https://github.com/YOUR_USERNAME/IntelliCode.git
-
+└── requirements.txt
+System Workflow
+                User
+                  │
+                  ▼
+      Manual / Python / CSV Upload
+                  │
+                  ▼
+      Software Metrics Extraction
+                  │
+                  ▼
+         Feature Mapping
+                  │
+                  ▼
+     Random Forest Prediction
+                  │
+                  ▼
+      Explainable AI Analysis
+                  │
+      ┌───────────┴────────────┐
+      ▼                        ▼
+   MySQL Storage         PDF Report
+      │                        │
+      └───────────┬────────────┘
+                  ▼
+          Interactive Dashboard
+Installation
+Clone Repository
+git clone https://github.com/yourusername/IntelliCode.git
 cd IntelliCode
-
-### Create Virtual Environment
-
-```bash
+Create Virtual Environment
 python -m venv venv
-```
 
-### Activate Environment
+Windows
 
-Windows:
-
-```bash
 venv\Scripts\activate
-```
 
-Linux/Mac:
+Linux / macOS
 
-```bash
 source venv/bin/activate
-```
-
-### Install Dependencies
-
-```bash
+Install Dependencies
 pip install -r requirements.txt
-```
+Configure MySQL
 
-### Run Application
+Create a database named:
 
-```bash
+CREATE DATABASE intellicode;
+
+Create the predictions table.
+
+(You can include your SQL schema here or in a separate .sql file.)
+
+Run the Application
 python app.py
-```
 
-Open:
+Visit:
 
-```text
 http://127.0.0.1:5000
-```
 
----
 
-## 📸 Current Dashboard Features
 
-✅ Software Defect Prediction
 
-✅ Risk Score Visualization
+This project demonstrates practical implementation of:
 
-✅ Risk Level Classification
+Machine Learning for Software Engineering
+Static Code Analysis
+Software Quality Prediction
+Explainable AI
+Flask Web Development
+MySQL Database Integration
+PDF Report Generation
+Data Visualization
+Full-Stack AI Application Development
+Author
 
-✅ Testing Priority Assignment
-
-✅ Prediction Result Dashboard
-
-✅ Explainable AI
-
-✅ AI Risk Assessment
-
-✅ Prediction History Tracking
-
-✅ Recent Predictions Table
-
-✅  Basic Python File Metrics Extraction
-
----
-
-## 📊 Current Project Status
-
-### Phase 1 – Core Defect Prediction System
-
-Completed ✅
-
-* Data Preprocessing
-* Model Training
-* Random Forest Prediction Engine
-* Flask Integration
-* Dashboard UI
-
-### Phase 2 – Explainable AI
-
-Completed ✅
-
-* Feature Importance Analysis
-* AI Explanation Panel
-* Risk Assessment Engine
-* Prediction History Logging
-
----
-
-## 🚀 Upcoming Features (Phase 3)
-
-### Risk Analytics Dashboard
-
-* Total Predictions
-* Defect Distribution
-* Risk Trends
-
-### Interactive Charts
-
-* Pie Charts
-* Bar Charts
-* Risk Analytics Visualizations
-
-### CSV Upload Prediction
-
-Predict multiple software modules at once using CSV files.
-
-### Advanced Explainable AI
-
-* SHAP Values
-* Local Explanations
-* Feature Contribution Graphs
-
-### Deployment
-
-* Render
-* Railway
-* PythonAnywhere
-
----
-
-## 🎓 Educational Value
-
-This project demonstrates practical skills in:
-
-* Machine Learning
-* Software Engineering
-* Explainable AI
-* Data Analysis
-* Web Development
-* Flask Application Development
-* GitHub Project Management
-
----
-
-## 👩‍💻 Author
-
-**Deepika**
+Deepika B R
 
 B.Tech Information Technology
 
-Aspiring Data Scientist & Software Engineer
+Agni College of Technology
 
----
+License
 
-## ⭐ IntelliCode Vision
-
-To evolve from a Software Defect Prediction Tool into a complete AI-Powered Software Quality Intelligence Platform capable of helping development teams build more reliable, maintainable, and defect-free software.
+This project is developed for educational and research purposes.
