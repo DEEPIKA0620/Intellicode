@@ -16,6 +16,7 @@ from database import (
     get_dashboard_stats
 )
 from utils.pdf_report import generate_pdf_report
+from bulk_pdf_report import generate_bulk_pdf_report
 
 METRIC_NAMES = {
     "loc": "Lines of Code",
@@ -347,6 +348,17 @@ def upload_csv():
 
     plt.close()
 
+    bulk_pdf_path = generate_bulk_pdf_report(
+    filename=file.filename,
+    total_modules=total_modules,
+    healthy_count=healthy_modules,
+    defective_count=defective_modules,
+    avg_risk=avg_risk,
+    highest_module=highest_module,
+    highest_risk=highest_risk,
+    top_risk_modules=top_risk_modules
+)
+
     return render_template(
         "bulk_results.html",
 
@@ -365,7 +377,8 @@ def upload_csv():
             classes="results-table",
             index=False
         ),
-        top_risk_modules=top_risk_modules
+        top_risk_modules=top_risk_modules,
+        bulk_pdf=bulk_pdf_path
     )
 
 @app.route('/download_csv')
@@ -528,6 +541,15 @@ def download_report():
         "reports/IntelliCode_Report.pdf",
         as_attachment=True,
         download_name="IntelliCode_Report.pdf"
+    )
+
+@app.route("/download_bulk_report")
+def download_bulk_report():
+
+    return send_file(
+        "reports/IntelliCode_Bulk_Report.pdf",
+        as_attachment=True,
+        download_name="IntelliCode_Bulk_Report.pdf"
     )
 
 if __name__ == "__main__":
