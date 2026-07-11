@@ -195,7 +195,7 @@ def generate_pdf_report(
         styles["Heading3"]))
 
     story.append(Paragraph(
-        "AI-Powered Software Quality Assurance Platform",
+        "AI-Powered Software Quality Assurance Platform", "© 2026 IntelliCode",
         normal))
 
     story.append(Paragraph(
