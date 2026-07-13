@@ -134,7 +134,16 @@ IntelliCode/
        ▼
  Interactive Dashboard
 ```
+## Key Highlights
 
+- AI-powered software defect prediction using Random Forest.
+- Automatic extraction of software metrics from Python source code.
+- Static code analysis using Radon.
+- Bulk prediction support for software metric datasets.
+- Professional PDF report generation.
+- MySQL-based prediction history and analytics dashboard.
+- Explainable AI with risk scores and recommendations.
+- Modern Flask-based web interface.
 ---
 
 ## Installation
