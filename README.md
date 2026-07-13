@@ -134,6 +134,24 @@ IntelliCode/
        ▼
  Interactive Dashboard
 ```
+
+## Dataset
+
+The model is trained using the NASA PROMISE JM1 Software Defect Dataset.
+
+The dataset contains software metrics such as:
+
+- Lines of Code (LOC)
+- Cyclomatic Complexity
+- Halstead Metrics
+- Branch Count
+- Maintainability-related metrics
+
+These metrics are used to classify software modules as:
+
+- Healthy Module
+- Defective Module
+
 ## Key Highlights
 
 - AI-powered software defect prediction using Random Forest.
